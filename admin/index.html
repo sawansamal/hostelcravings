@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hostel Cravings — Owner Hub & Store Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Playfair+Display:ital,wght@0,600..900;1,600..900&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a12;
+      --bg-surface: #12121f;
+      --bg-card: #171727;
+      --bg-card-hover: #1e1e33;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(201, 168, 76, 0.45);
+      --gold: #c9a84c;
+      --gold-light: #e8c76e;
+      --gold-glow: rgba(201, 168, 76, 0.2);
+      --gold-faint: rgba(201, 168, 76, 0.08);
+      --text: #f5f0e8;
+      --text-muted: #8e8880;
+      --text-dim: #5c5750;
+      --green: #22c55e;
+      --green-faint: rgba(34, 197, 94, 0.12);
+      --orange: #f97316;
+      --orange-faint: rgba(249, 115, 22, 0.12);
+      --blue: #3b82f6;
+      --blue-faint: rgba(59, 130, 246, 0.12);
+      --purple: #a855f7;
+      --purple-faint: rgba(168, 85, 247, 0.12);
+      --red: #ef4444;
+      --red-faint: rgba(239, 68, 68, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --shadow: 0 12px 36px rgba(0,0,0,0.4);
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LOGIN SCREEN ─── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(ellipse at 50% 15%, rgba(201, 168, 76, 0.15) 0%, transparent 65%);
+    }
+
+    .login-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-lg);
+      padding: 44px 38px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 32px var(--gold-glow);
+      text-align: center;
+      position: relative;
+    }
+
+    .login-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0f; font-size: 1.8rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px var(--gold-glow);
+    }
+
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+
+    .login-sub {
+      color: var(--text-muted); font-size: 0.88rem; margin-bottom: 28px;
+    }
+
+    .form-group {
+      text-align: left; margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block; font-size: 0.76rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+
+    .input-wrap {
+      position: relative; display: flex; align-items: center;
+    }
+
+    .input-wrap iconify-icon {
+      position: absolute; left: 14px; color: var(--text-muted); font-size: 1.1rem;
+    }
+
+    .input-wrap input {
+      width: 100%; padding: 13px 14px 13px 42px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem; outline: none; transition: var(--transition);
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 16px var(--gold-glow);
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .btn-login {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      border: none; border-radius: var(--radius-pill);
+      color: #0a0a0f; font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px var(--gold-glow);
+    }
+
+    .btn-demo-creds {
+      background: none; border: 1px dashed var(--border);
+      color: var(--gold-light); font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
+      padding: 8px 14px; border-radius: var(--radius-pill);
+      cursor: pointer; margin-top: 16px; transition: var(--transition);
+    }
+
+    .btn-demo-creds:hover {
+      background: var(--gold-faint); border-color: var(--gold);
+    }
+
+    .login-error {
+      color: var(--red); font-size: 0.82rem; margin-top: 12px; min-height: 18px;
+    }
+
+    /* ─── OWNER APP LAYOUT ─── */
+    #app {
+      display: none; min-height: 100vh;
+    }
+
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 260px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; z-index: 100;
+      padding: 24px 18px;
+    }
+
+    .sidebar-brand {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 6px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-brand-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0f; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px var(--gold-glow); flex-shrink: 0;
+    }
+
+    .sidebar-brand-text h2 {
+      font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.2;
+    }
+
+    .sidebar-brand-text span {
+      font-size: 0.72rem; color: var(--gold-light); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    .nav-list {
+      display: flex; flex-direction: column; gap: 6px; flex: 1;
+    }
+
+    .nav-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 12px 14px;
+      background: transparent; border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition); text-align: left;
+    }
+
+    .nav-btn-left {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .nav-btn iconify-icon {
+      font-size: 1.2rem;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.04); color: var(--text);
+    }
+
+    .nav-btn.active {
+      background: var(--gold-faint);
+      border-color: var(--border-focus);
+      color: var(--gold-light);
+    }
+
+    .nav-badge {
+      background: var(--orange); color: #fff;
+      font-size: 0.72rem; font-weight: 700;
+      padding: 2px 7px; border-radius: var(--radius-pill);
+      min-width: 20px; text-align: center;
+    }
+
+    .nav-badge.zero { display: none; }
+
+    .sidebar-footer {
+      padding-top: 18px; border-top: 1px solid var(--border);
+    }
+
+    .owner-info {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md); margin-bottom: 12px;
+    }
+
+    .owner-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0f; font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .owner-details {
+      flex: 1; min-width: 0;
+    }
+
+    .owner-name {
+      font-size: 0.84rem; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .owner-role {
+      font-size: 0.7rem; color: var(--green); display: flex; align-items: center; gap: 4px;
+    }
+
+    .owner-role::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    }
+
+    .btn-logout {
+      width: 100%; padding: 10px;
+      background: var(--red-faint); border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius-md); color: var(--red);
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-logout:hover {
+      background: rgba(239,68,68,0.2);
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main-wrap {
+      margin-left: 260px; padding: 28px 36px 48px;
+    }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+    }
+
+    .topbar-left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .topbar-left p {
+      font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;
+    }
+
+    .topbar-actions {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .btn-action {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: var(--radius-pill);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition); text-decoration: none;
+    }
+
+    .btn-primary-gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0f; border: none; box-shadow: 0 4px 16px var(--gold-glow);
+    }
+
+    .btn-primary-gold:hover {
+      transform: translateY(-2px); box-shadow: 0 6px 24px var(--gold-glow);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.18);
+    }
+
+    /* Sound chime toggle */
+    .sound-toggle {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      padding: 8px 14px; border-radius: var(--radius-pill); cursor: pointer;
+    }
+    .sound-toggle.active {
+      color: var(--green); border-color: rgba(34,197,94,0.3); background: var(--green-faint);
+    }
+
+    /* ─── STATS GRID ─── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px; margin-bottom: 28px;
+    }
+
+    .stat-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px; position: relative; overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .stat-box:hover {
+      border-color: rgba(255,255,255,0.16); transform: translateY(-2px);
+    }
+
+    .stat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .stat-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .stat-icon.gold   { background: var(--gold-faint); color: var(--gold); }
+    .stat-icon.orange { background: var(--orange-faint); color: var(--orange); }
+    .stat-icon.green  { background: var(--green-faint); color: var(--green); }
+    .stat-icon.blue   { background: var(--blue-faint); color: var(--blue); }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; color: var(--text);
+      line-height: 1.1; margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* ─── SECTION CARDS & TABLES ─── */
+    .card-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow);
+      margin-bottom: 32px;
+    }
+
+    .card-panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    .card-panel-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      padding: 7px 14px; border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.04); border: 1px solid transparent;
+      color: var(--text-muted); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .filter-tab:hover {
+      background: rgba(255,255,255,0.08); color: var(--text);
+    }
+
+    .filter-tab.active {
+      background: var(--gold-faint); border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    .filter-tab .tab-count {
+      background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 10px;
+      font-size: 0.7rem;
+    }
+
+    .filter-tab.active .tab-count {
+      background: var(--gold); color: #0a0a0f;
+    }
+
+    /* Tables */
+    .table-container {
+      width: 100%; overflow-x: auto;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; text-align: left;
+      font-size: 0.88rem;
+    }
+
+    thead th {
+      padding: 14px 20px;
+      background: rgba(0,0,0,0.2);
+      font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Status badges */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: var(--radius-pill);
+      font-size: 0.76rem; font-weight: 700; text-transform: capitalize;
+    }
+
+    .status-pill::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+    }
+
+    .status-pending {
+      background: var(--orange-faint); color: var(--orange); border: 1px solid rgba(249,115,22,0.3);
+    }
+    .status-pending::before { background: var(--orange); }
+
+    .status-confirmed {
+      background: var(--blue-faint); color: var(--blue); border: 1px solid rgba(59,130,246,0.3);
+    }
+    .status-confirmed::before { background: var(--blue); }
+
+    .status-preparing {
+      background: var(--purple-faint); color: var(--purple); border: 1px solid rgba(168,85,247,0.3);
+    }
+    .status-preparing::before { background: var(--purple); }
+
+    .status-out_for_delivery {
+      background: rgba(6,182,212,0.12); color: #06b6d4; border: 1px solid rgba(6,182,212,0.3);
+    }
+    .status-out_for_delivery::before { background: #06b6d4; }
+
+    .status-delivered {
+      background: var(--green-faint); color: var(--green); border: 1px solid rgba(34,197,94,0.3);
+    }
+    .status-delivered::before { background: var(--green); }
+
+    .status-cancelled {
+      background: var(--red-faint); color: var(--red); border: 1px solid rgba(239,68,68,0.3);
+    }
+    .status-cancelled::before { background: var(--red); }
+
+    /* Action buttons in orders table */
+    .btn-status-action {
+      padding: 6px 12px; border-radius: var(--radius-pill);
+      font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      border: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-accept {
+      background: var(--green); color: #0a0a0f;
+    }
+    .btn-accept:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,197,94,0.35); }
+
+    .btn-preparing {
+      background: var(--purple); color: #fff;
+    }
+
+    .btn-dispatch {
+      background: #06b6d4; color: #0a0a0f;
+    }
+
+    .btn-deliver {
+      background: var(--green); color: #0a0a0f;
+    }
+
+    .btn-cancel {
+      background: var(--red-faint); color: var(--red); border: 1px solid rgba(239,68,68,0.3);
+    }
+    .btn-cancel:hover { background: rgba(239,68,68,0.25); }
+
+    .btn-wa-chat {
+      background: #25d366; color: #fff; border-radius: 50%;
+      width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 0.95rem; transition: var(--transition);
+    }
+    .btn-wa-chat:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+
+    .select-status {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 5px 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.78rem; outline: none; cursor: pointer;
+    }
+
+    /* ─── PRODUCTS MANAGEMENT ─── */
+    .product-thumb {
+      width: 48px; height: 48px; border-radius: 12px;
+      object-fit: cover; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .qty-stepper {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 2px 6px;
+    }
+
+    .qty-btn {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: none;
+      color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: bold; transition: var(--transition);
+    }
+    .qty-btn:hover { background: var(--gold); color: #0a0a0f; }
+
+    .qty-val-input {
+      width: 42px; text-align: center; background: transparent;
+      border: none; color: var(--text); font-weight: 700;
+      font-size: 0.88rem; outline: none; font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Stock toggle switch */
+    .stock-switch {
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    }
+
+    .toggle-track {
+      width: 40px; height: 22px; border-radius: 12px;
+      background: rgba(255,255,255,0.15); position: relative;
+      transition: var(--transition);
+    }
+
+    .toggle-thumb {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #ffffff; position: absolute; top: 3px; left: 3px;
+      transition: var(--transition);
+    }
+
+    .stock-switch.active .toggle-track {
+      background: var(--green);
+    }
+
+    .stock-switch.active .toggle-thumb {
+      transform: translateX(18px);
+    }
+
+    .stock-switch-label {
+      font-size: 0.82rem; font-weight: 700;
+    }
+    .stock-switch.active .stock-switch-label { color: var(--green); }
+    .stock-switch:not(.active) .stock-switch-label { color: var(--red); }
+
+    /* Action icons */
+    .icon-btn {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      transition: var(--transition); font-size: 1rem;
+    }
+    .icon-btn:hover { color: var(--text); background: rgba(255,255,255,0.1); }
+    .icon-btn.danger:hover { color: var(--red); background: var(--red-faint); border-color: rgba(239,68,68,0.3); }
+
+    /* ─── MODAL DIALOGS ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0; visibility: hidden; transition: var(--transition);
+    }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px 30px;
+      width: 100%; max-width: 520px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 32px var(--gold-glow);
+      position: relative; max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px) scale(0.97); transition: var(--transition);
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: none;
+      color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); font-size: 1.1rem;
+    }
+    .modal-close:hover { color: var(--text); background: rgba(255,255,255,0.15); }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .modal-sub {
+      font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;
+    }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+
+    .modal-input, .modal-select, .modal-textarea {
+      width: 100%; padding: 12px 14px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: var(--radius-md); color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none;
+      transition: var(--transition);
+    }
+    .modal-input:focus, .modal-select:focus, .modal-textarea:focus {
+      border-color: var(--gold); background: rgba(201,168,76,0.04); box-shadow: 0 0 12px var(--gold-glow);
+    }
+    .modal-textarea { resize: vertical; min-height: 80px; }
+
+    /* Quick Preset Image Selectors */
+    .preset-chips {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;
+    }
+    .preset-chip {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: var(--radius-pill); font-size: 0.74rem;
+      cursor: pointer; color: var(--text-muted); transition: var(--transition);
+    }
+    .preset-chip:hover {
+      background: var(--gold-faint); border-color: var(--gold); color: var(--gold-light);
+    }
+
+    /* Toast */
+    #toast-notice {
+      position: fixed; bottom: 28px; right: 28px; z-index: 99999;
+      background: #1a1a2e; border: 1px solid rgba(201,168,76,0.5);
+      border-radius: var(--radius-pill); padding: 12px 22px;
+      color: var(--text); font-size: 0.88rem; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      transform: translateY(20px); opacity: 0; transition: var(--transition);
+      pointer-events: none;
+    }
+    #toast-notice.show {
+      transform: translateY(0); opacity: 1;
+    }
+
+    /* Empty state */
+    .empty-box {
+      text-align: center; padding: 48px 20px; color: var(--text-muted);
+    }
+    .empty-box iconify-icon {
+      font-size: 3rem; color: var(--gold); display: block; margin: 0 auto 12px; opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .sidebar {
+        width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border);
+      }
+      .main-wrap {
+        margin-left: 0; padding: 20px 16px;
+      }
+      .nav-list { flex-direction: row; overflow-x: auto; padding-bottom: 8px; }
+      .nav-btn { white-space: nowrap; }
+      .sidebar-footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── 1. LOGIN SCREEN ─── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-icon">
+      <iconify-icon icon="ph:shield-check-bold"></iconify-icon>
+    </div>
+    <h1 class="login-title">Owner Portal</h1>
+    <p class="login-sub">Hostel Cravings Store &amp; Order Management</p>
+
+    <form id="owner-login-form" novalidate>
+      <div class="form-group">
+        <label for="adm-email">Owner Email</label>
+        <div class="input-wrap">
+          <iconify-icon icon="ph:user-bold"></iconify-icon>
+          <input type="email" id="adm-email" placeholder="admin@hostelcravings.in" value="admin@hostelcravings.in" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="adm-pass">Password</label>
+        <div class="input-wrap">
+          <iconify-icon icon="ph:lock-bold"></iconify-icon>
+          <input type="password" id="adm-pass" placeholder="••••••••" value="kulfimodda69" required />
+        </div>
+      </div>
+
+      <div class="login-error" id="adm-error"></div>
+
+      <button type="submit" class="btn-login" id="adm-login-btn">
+        <iconify-icon icon="ph:sign-in-bold"></iconify-icon>
+        Log into Store Hub
+      </button>
+
+      <button type="button" class="btn-demo-creds" id="btn-fill-creds">
+        ⚡ Demo Credentials: admin@hostelcravings.in / kulfimodda69
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ─── 2. OWNER HUB APP ─── -->
+<div id="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">
+        <iconify-icon icon="ph:cookie-bold"></iconify-icon>
+      </div>
+      <div class="sidebar-brand-text">
+        <h2>Hostel Cravings</h2>
+        <span>Owner Hub</span>
+      </div>
+    </div>
+
+    <nav class="nav-list">
+      <button class="nav-btn active" data-page="orders">
+        <div class="nav-btn-left">
+          <iconify-icon icon="ph:package-bold"></iconify-icon>
+          <span>Live Orders</span>
+        </div>
+        <span class="nav-badge" id="nav-pending-badge">0</span>
+      </button>
+
+      <button class="nav-btn" data-page="products">
+        <div class="nav-btn-left">
+          <iconify-icon icon="ph:storefront-bold"></iconify-icon>
+          <span>Products &amp; Stock</span>
+        </div>
+      </button>
+
+      <button class="nav-btn" data-page="customers">
+        <div class="nav-btn-left">
+          <iconify-icon icon="ph:users-bold"></iconify-icon>
+          <span>Customers</span>
+        </div>
+      </button>
+
+      <button class="nav-btn" data-page="dashboard">
+        <div class="nav-btn-left">
+          <iconify-icon icon="ph:chart-line-up-bold"></iconify-icon>
+          <span>Overview &amp; Stats</span>
+        </div>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="owner-info">
+        <div class="owner-avatar">A</div>
+        <div class="owner-details">
+          <div class="owner-name" id="adm-display-name">Store Owner</div>
+          <div class="owner-role">Online · Store Active</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="btn-logout">
+        <iconify-icon icon="ph:sign-out-bold"></iconify-icon>
+        Log out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Wrap -->
+  <main class="main-wrap">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="page-heading">
+          <iconify-icon icon="ph:package-bold" style="color:var(--gold)"></iconify-icon>
+          Live Orders &amp; Fulfillment
+        </h1>
+        <p id="topbar-subtitle">Accept, prepare, and dispatch midnight cravings in real time.</p>
+      </div>
+
+      <div class="topbar-actions">
+        <button type="button" class="sound-toggle active" id="btn-sound-toggle" title="Toggle audio chime for incoming orders">
+          <iconify-icon icon="ph:bell-ringing-bold"></iconify-icon>
+          <span>Alerts On</span>
+        </button>
+
+        <button type="button" class="btn-action btn-ghost" id="btn-manual-refresh">
+          <iconify-icon icon="ph:arrows-clockwise-bold" id="refresh-icon"></iconify-icon>
+          Refresh
+        </button>
+
+        <button type="button" class="btn-action btn-primary-gold" id="btn-quick-add-prod" style="display:none">
+          <iconify-icon icon="ph:plus-bold"></iconify-icon>
+          Add Product
+        </button>
+
+        <a href="/" target="_blank" class="btn-action btn-ghost" title="View customer storefront">
+          <iconify-icon icon="ph:arrow-square-out-bold"></iconify-icon>
+          View Store
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-header">
+          <span class="stat-label">Pending Acceptance</span>
+          <div class="stat-icon orange"><iconify-icon icon="ph:clock-countdown-bold"></iconify-icon></div>
+        </div>
+        <div class="stat-value" id="stat-pending" style="color:var(--orange)">0</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-header">
+          <span class="stat-label">Delivered Today</span>
+          <div class="stat-icon green"><iconify-icon icon="ph:check-circle-bold"></iconify-icon></div>
+        </div>
+        <div class="stat-value" id="stat-delivered">0</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-header">
+          <span class="stat-label">Total Revenue</span>
+          <div class="stat-icon gold"><iconify-icon icon="ph:currency-inr-bold"></iconify-icon></div>
+        </div>
+        <div class="stat-value" id="stat-revenue">₹0</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-header">
+          <span class="stat-label">Active Menu Items</span>
+          <div class="stat-icon blue"><iconify-icon icon="ph:cookie-bold"></iconify-icon></div>
+        </div>
+        <div class="stat-value" id="stat-products">0</div>
+      </div>
+    </div>
+
+    <!-- ─── PAGE 1: LIVE ORDERS ─── -->
+    <section class="page-view" id="view-orders">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div class="filter-tabs" id="order-status-tabs">
+            <button type="button" class="filter-tab active" data-status="">
+              All Orders <span class="tab-count" id="count-all">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-status="pending" style="color:var(--orange)">
+              🟡 To Accept <span class="tab-count" id="count-pending">0</span>
+            </button>
+            <button type="button" class="filter-tab" data-status="confirmed">
+              🔵 Confirmed
+            </button>
+            <button type="button" class="filter-tab" data-status="preparing">
+              🟣 Preparing
+            </button>
+            <button type="button" class="filter-tab" data-status="out_for_delivery">
+              🚀 Out for Delivery
+            </button>
+            <button type="button" class="filter-tab" data-status="delivered">
+              ✅ Delivered
+            </button>
+            <button type="button" class="filter-tab" data-status="cancelled">
+              ❌ Cancelled
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>#ID</th>
+                <th>Customer &amp; Contact</th>
+                <th>Hostel / Room</th>
+                <th>Order Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action to Accept / Advance</th>
+                <th>WhatsApp</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PAGE 2: PRODUCTS & STOCK ─── -->
+    <section class="page-view" id="view-products" style="display:none">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div class="card-panel-title">
+            <iconify-icon icon="ph:cookie-bold" style="color:var(--gold)"></iconify-icon>
+            Snack Inventory &amp; Stock Levels
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <input type="text" id="prod-search" placeholder="Search snack..." style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;padding:8px 16px;color:#fff;font-size:.85rem;outline:none" />
+            <button type="button" class="btn-action btn-primary-gold" id="btn-open-add-modal">
+              <iconify-icon icon="ph:plus-bold"></iconify-icon> Add New Snack
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price (₹)</th>
+                <th>Available Quantity</th>
+                <th>Stock Switch</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PAGE 3: CUSTOMERS ─── -->
+    <section class="page-view" id="view-customers" style="display:none">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div class="card-panel-title">
+            <iconify-icon icon="ph:users-bold" style="color:var(--gold)"></iconify-icon>
+            Customer Directory
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Hostel / Room</th>
+                <th>Total Orders</th>
+                <th>Total Spent</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody id="customers-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PAGE 4: OVERVIEW ─── -->
+    <section class="page-view" id="view-dashboard" style="display:none">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div class="card-panel-title">
+            <iconify-icon icon="ph:chart-bar-bold" style="color:var(--gold)"></iconify-icon>
+            Store Performance &amp; Operations
+          </div>
+        </div>
+        <div style="padding:28px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+          <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;border:1px solid var(--border)">
+            <h3 style="margin-bottom:8px;font-size:1.1rem;color:var(--gold-light)">🚀 10-Minute Fulfillment</h3>
+            <p style="font-size:.88rem;color:var(--text-muted);line-height:1.6">
+              When orders arrive in the <strong>To Accept</strong> tab, click <strong>Accept Order</strong> to confirm and start preparation. Update to <strong>Out for Delivery</strong> when leaving for the hostel block.
+            </p>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;border:1px solid var(--border)">
+            <h3 style="margin-bottom:8px;font-size:1.1rem;color:var(--gold-light)">📦 Stock Management</h3>
+            <p style="font-size:.88rem;color:var(--text-muted);line-height:1.6">
+              Use the <strong>Products &amp; Stock</strong> tab to set exact available units for each snack. You can toggle snacks Out of Stock with 1 click when supplies run out.
+            </p>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:16px;border:1px solid var(--border)">
+            <h3 style="margin-bottom:8px;font-size:1.1rem;color:var(--gold-light)">💬 WhatsApp Direct Messaging</h3>
+            <p style="font-size:.88rem;color:var(--text-muted);line-height:1.6">
+              Every order card has a direct green WhatsApp button. Click it to immediately ping the student with order confirmation, room arrival, or payment reminders.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ─── 3. PRODUCT MODAL (ADD / EDIT) ─── -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="btn-close-prod-modal">
+      <iconify-icon icon="ph:x-bold"></iconify-icon>
+    </button>
+    <h2 class="modal-title" id="prod-modal-title">Add New Snack</h2>
+    <p class="modal-sub">Stock up your hostel store inventory</p>
+
+    <form id="product-form" novalidate>
+      <input type="hidden" id="pm-id" />
+
+      <div class="form-group">
+        <label for="pm-name">Snack Name *</label>
+        <input type="text" id="pm-name" class="modal-input" placeholder="e.g. Lotte Choco Pie (Pack of 6)" required />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pm-category">Category *</label>
+          <select id="pm-category" class="modal-select">
+            <option value="chips">Chips &amp; Crisps</option>
+            <option value="sweet">Sweet &amp; Chocolate</option>
+            <option value="drinks">Beverages &amp; Coffee</option>
+            <option value="instant">Instant Eats (Maggi)</option>
+            <option value="biscuits">Biscuits &amp; Waffers</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="pm-price">Price (₹) *</label>
+          <input type="number" id="pm-price" class="modal-input" placeholder="49" min="1" step="1" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pm-qty">Available Quantity</label>
+          <input type="number" id="pm-qty" class="modal-input" placeholder="25" min="0" value="20" required />
+        </div>
+
+        <div class="form-group">
+          <label for="pm-stock">Initial Stock Status</label>
+          <select id="pm-stock" class="modal-select">
+            <option value="1">In Stock (Available)</option>
+            <option value="0">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pm-img">Image URL</label>
+        <input type="url" id="pm-img" class="modal-input" placeholder="https://images.unsplash.com/..." />
+        <div class="preset-chips">
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80')">🌶️ Chips</span>
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80')">🍫 Chocolate</span>
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80')">🍜 Maggi</span>
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80')">☕ Cold Brew</span>
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80')">🧇 Waffer</span>
+          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80')">🍿 Popcorn</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pm-desc">Short Description (optional)</label>
+        <textarea id="pm-desc" class="modal-textarea" placeholder="Crunchy midnight bite, loved by hostellers..."></textarea>
+      </div>
+
+      <div id="pm-error" style="color:var(--red);font-size:.82rem;margin-bottom:12px;min-height:18px"></div>
+
+      <button type="submit" class="btn-login" id="btn-save-prod">
+        <iconify-icon icon="ph:check-bold"></iconify-icon> Save Product
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ─── 4. TOAST NOTIFICATION ─── -->
+<div id="toast-notice">
+  <iconify-icon icon="ph:check-circle-bold" style="color:var(--green);font-size:1.2rem"></iconify-icon>
+  <span id="toast-text">Update saved</span>
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  // Dynamic API configuration
+  const API = (window.location.protocol === "file:")
+    ? "http://localhost:3000/api"
+    : (window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1"))
+      ? window.location.origin + "/api"
+      : "/api";
+
+  let token = localStorage.getItem('hc_admin_token');
+  let ordersData = [];
+  let productsData = [];
+  let currentStatusFilter = '';
+  let soundEnabled = true;
+  let previousOrderCount = -1;
+
+  /* ── Audio Chime Generator (Zero dependencies) ── */
+  function playOrderChime() {
+    if (!soundEnabled) return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+      osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12); // A5
+
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      osc.stop(ctx.currentTime + 0.45);
+    } catch(e) {}
+  }
+
+  /* ── Toast Helper ── */
+  function showToast(msg, isSuccess = true) {
+    const el = document.getElementById('toast-notice');
+    const txt = document.getElementById('toast-text');
+    const ic = el.querySelector('iconify-icon');
+    if (!el || !txt) return;
+
+    txt.textContent = msg;
+    ic.setAttribute('icon', isSuccess ? 'ph:check-circle-bold' : 'ph:warning-circle-bold');
+    ic.style.color = isSuccess ? 'var(--green)' : 'var(--red)';
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  /* ── Authentication ── */
+  const loginForm = document.getElementById('owner-login-form');
+  const loginScreen = document.getElementById('login-screen');
+  const appContainer = document.getElementById('app');
+  const fillCredsBtn = document.getElementById('btn-fill-creds');
+
+  if (fillCredsBtn) {
+    fillCredsBtn.addEventListener('click', () => {
+      document.getElementById('adm-email').value = 'admin@hostelcravings.in';
+      document.getElementById('adm-pass').value = 'kulfimodda69';
+      showToast('Credentials filled! Click Log into Store Hub');
+    });
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adm-email').value.trim();
+      const pass = document.getElementById('adm-pass').value.trim();
+      const errEl = document.getElementById('adm-error');
+      const btn = document.getElementById('adm-login-btn');
+
+      if (errEl) errEl.textContent = '';
+      btn.innerHTML = '<iconify-icon icon="ph:circle-notch-bold" style="animation:spin 1s linear infinite"></iconify-icon> Signing in...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password: pass })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          if (errEl) errEl.textContent = data.error || 'Login failed.';
+          btn.innerHTML = '<iconify-icon icon="ph:sign-in-bold"></iconify-icon> Log into Store Hub';
+          btn.disabled = false;
+          return;
+        }
+
+        if (data.user.role !== 'admin') {
+          if (errEl) errEl.textContent = 'Access restricted to Store Owners / Admins.';
+          btn.innerHTML = '<iconify-icon icon="ph:sign-in-bold"></iconify-icon> Log into Store Hub';
+          btn.disabled = false;
+          return;
+        }
+
+        token = data.token;
+        localStorage.setItem('hc_admin_token', token);
+        document.getElementById('adm-display-name').textContent = data.user.name || 'Store Owner';
+        showApp();
+      } catch (err) {
+        if (errEl) errEl.textContent = 'Server unreachable. Ensure the backend server is running.';
+        btn.innerHTML = '<iconify-icon icon="ph:sign-in-bold"></iconify-icon> Log into Store Hub';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    localStorage.removeItem('hc_admin_token');
+    token = null;
+    appContainer.style.display = 'none';
+    loginScreen.style.display = 'flex';
+  });
+
+  function showApp() {
+    loginScreen.style.display = 'none';
+    appContainer.style.display = 'block';
+    refreshAllData();
+  }
+
+  // Check saved session on load
+  if (token) {
+    fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(r => r.json())
+      .then(d => {
+        if (d.user && d.user.role === 'admin') {
+          document.getElementById('adm-display-name').textContent = d.user.name || 'Store Owner';
+          showApp();
+        } else {
+          loginScreen.style.display = 'flex';
+        }
+      })
+      .catch(() => { loginScreen.style.display = 'flex'; });
+  } else {
+    loginScreen.style.display = 'flex';
+  }
+
+  /* ── Navigation ── */
+  const navBtns = document.querySelectorAll('.nav-btn[data-page]');
+  const pageViews = document.querySelectorAll('.page-view');
+  const headingEl = document.getElementById('page-heading');
+  const subtitleEl = document.getElementById('topbar-subtitle');
+  const quickAddBtn = document.getElementById('btn-quick-add-prod');
+
+  const pageMeta = {
+    orders: {
+      title: 'Live Orders & Fulfillment',
+      sub: 'Accept, prepare, and dispatch midnight cravings in real time.',
+      icon: 'ph:package-bold'
+    },
+    products: {
+      title: 'Products & Stock Inventory',
+      sub: 'Set available quantity, stock in / stock out, or add new snacks.',
+      icon: 'ph:storefront-bold'
+    },
+    customers: {
+      title: 'Customer Directory',
+      sub: 'View hostellers who have ordered and their spending history.',
+      icon: 'ph:users-bold'
+    },
+    dashboard: {
+      title: 'Store Overview & Performance',
+      sub: 'Fulfillment operations, sales metrics, and guidelines.',
+      icon: 'ph:chart-line-up-bold'
+    }
+  };
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = btn.dataset.page;
+      navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      pageViews.forEach(v => v.style.display = 'none');
+      const targetView = document.getElementById(`view-${page}`);
+      if (targetView) targetView.style.display = 'block';
+
+      const meta = pageMeta[page] || pageMeta.orders;
+      headingEl.innerHTML = `<iconify-icon icon="${meta.icon}" style="color:var(--gold)"></iconify-icon> ${meta.title}`;
+      subtitleEl.textContent = meta.sub;
+
+      quickAddBtn.style.display = (page === 'products') ? 'inline-flex' : 'none';
+
+      if (page === 'orders') loadOrders();
+      if (page === 'products') loadProducts();
+      if (page === 'customers') loadCustomers();
+      if (page === 'dashboard') loadStats();
+    });
+  });
+
+  /* ── Data Fetching & Sync ── */
+  async function refreshAllData() {
+    const icon = document.getElementById('refresh-icon');
+    if (icon) icon.style.animation = 'spin .7s linear';
+    setTimeout(() => { if (icon) icon.style.animation = ''; }, 750);
+
+    await Promise.all([
+      loadStats(),
+      loadOrders(),
+      loadProducts()
+    ]);
+  }
+
+  document.getElementById('btn-manual-refresh').addEventListener('click', refreshAllData);
+
+  /* Sound Toggle */
+  const soundBtn = document.getElementById('btn-sound-toggle');
+  if (soundBtn) {
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.classList.toggle('active', soundEnabled);
+      soundBtn.querySelector('span').textContent = soundEnabled ? 'Alerts On' : 'Alerts Off';
+      soundBtn.querySelector('iconify-icon').setAttribute('icon', soundEnabled ? 'ph:bell-ringing-bold' : 'ph:bell-slash-bold');
+      if (soundEnabled) playOrderChime();
+    });
+  }
+
+  /* ── 1. STATS ── */
+  async function loadStats() {
+    try {
+      const res = await fetch(`${API}/admin/stats`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      const stats = await res.json();
+
+      document.getElementById('stat-pending').textContent = stats.pendingOrders || 0;
+      document.getElementById('stat-delivered').textContent = stats.deliveredToday || 0;
+      document.getElementById('stat-revenue').textContent = `₹${Number(stats.revenue || 0).toFixed(0)}`;
+
+      const badge = document.getElementById('nav-pending-badge');
+      const count = stats.pendingOrders || 0;
+      badge.textContent = count;
+      badge.classList.toggle('zero', count === 0);
+    } catch(e) {}
+  }
+
+  /* ── 2. ORDERS ── */
+  async function loadOrders() {
+    try {
+      const res = await fetch(`${API}/admin/orders`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      ordersData = await res.json();
+
+      // Check for incoming new order to play chime
+      if (previousOrderCount !== -1 && ordersData.length > previousOrderCount) {
+        playOrderChime();
+        showToast('🔔 New order received from student!');
+      }
+      previousOrderCount = ordersData.length;
+
+      // Update badge counts
+      const pendingCount = ordersData.filter(o => o.status === 'pending').length;
+      document.getElementById('count-all').textContent = ordersData.length;
+      document.getElementById('count-pending').textContent = pendingCount;
+      document.getElementById('stat-pending').textContent = pendingCount;
+
+      renderOrdersTable();
+    } catch(e) {}
+  }
+
+  function renderOrdersTable() {
+    const tbody = document.getElementById('orders-tbody');
+    if (!tbody) return;
+
+    let list = ordersData;
+    if (currentStatusFilter) {
+      list = list.filter(o => o.status === currentStatusFilter);
+    }
+
+    if (!list.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="empty-box">
+              <iconify-icon icon="ph:package-bold"></iconify-icon>
+              <p style="font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:4px">No orders found</p>
+              <p style="font-size:.85rem;color:var(--text-muted)">Orders will appear here as soon as hostellers place them.</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = list.map(o => {
+      const custName = o.user_name || o.guest_name || 'Hostel Student';
+      const custPhone = o.user_phone || o.guest_phone || '';
+      const timeStr = o.created_at ? new Date(o.created_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—';
+      const cleanPhone = custPhone.replace(/[^\d]/g, '');
+
+      // Action button based on current status
+      let actionHtml = '';
+      if (o.status === 'pending') {
+        actionHtml = `
+          <div style="display:flex;gap:6px">
+            <button type="button" class="btn-status-action btn-accept" onclick="window._setOrderStatus(${o.id}, 'confirmed')">
+              <iconify-icon icon="ph:check-bold"></iconify-icon> Accept Order
+            </button>
+            <button type="button" class="btn-status-action btn-cancel" onclick="window._setOrderStatus(${o.id}, 'cancelled')">
+              Decline
+            </button>
+          </div>
+        `;
+      } else if (o.status === 'confirmed') {
+        actionHtml = `
+          <button type="button" class="btn-status-action btn-preparing" onclick="window._setOrderStatus(${o.id}, 'preparing')">
+            <iconify-icon icon="ph:cooking-pot-bold"></iconify-icon> Mark Preparing
+          </button>
+        `;
+      } else if (o.status === 'preparing') {
+        actionHtml = `
+          <button type="button" class="btn-status-action btn-dispatch" onclick="window._setOrderStatus(${o.id}, 'out_for_delivery')">
+            <iconify-icon icon="ph:bicycle-bold"></iconify-icon> Send for Delivery 🚀
+          </button>
+        `;
+      } else if (o.status === 'out_for_delivery') {
+        actionHtml = `
+          <button type="button" class="btn-status-action btn-deliver" onclick="window._setOrderStatus(${o.id}, 'delivered')">
+            <iconify-icon icon="ph:check-circle-bold"></iconify-icon> Mark Delivered ✅
+          </button>
+        `;
+      } else {
+        actionHtml = `
+          <select class="select-status" onchange="window._setOrderStatus(${o.id}, this.value)">
+            <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
+            <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmed</option>
+            <option value="preparing" ${o.status==='preparing'?'selected':''}>Preparing</option>
+            <option value="out_for_delivery" ${o.status==='out_for_delivery'?'selected':''}>Out for Delivery</option>
+            <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
+            <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Cancelled</option>
+          </select>
+        `;
+      }
+
+      // WhatsApp prefilled message
+      const waMsg = encodeURIComponent(`Hi ${custName}! Your Hostel Cravings order #${o.id} (${o.items_summary || 'snacks'}) is ${o.status.replace(/_/g,' ')}. Total: ₹${o.total} (Cash on delivery).`);
+      const waUrl = cleanPhone ? `https://wa.me/91${cleanPhone.slice(-10)}?text=${waMsg}` : '#';
+
+      return `
+        <tr>
+          <td>
+            <b style="color:var(--gold-light)">#${o.id}</b>
+            <div style="font-size:.74rem;color:var(--text-muted)">${timeStr}</div>
+          </td>
+          <td>
+            <div style="font-weight:700;color:var(--text)">${custName}</div>
+            <div style="font-size:.78rem;color:var(--text-muted)">${custPhone || 'No phone'}</div>
+          </td>
+          <td>
+            <div style="font-weight:600">${o.hostel_no || 'Campus'} / Room ${o.room_no || '—'}</div>
+            <div style="font-size:.72rem;color:var(--text-muted)">${o.notes ? `Note: "${o.notes}"` : 'No notes'}</div>
+          </td>
+          <td style="max-width:200px">
+            <div style="font-size:.84rem;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${o.items_summary}">
+              ${o.items_summary || 'Items list'}
+            </div>
+          </td>
+          <td>
+            <b style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light)">₹${o.total}</b>
+            <div style="font-size:.7rem;color:var(--text-muted)">COD</div>
+          </td>
+          <td>
+            <span class="status-pill status-${o.status}">${o.status.replace(/_/g, ' ')}</span>
+          </td>
+          <td>
+            ${actionHtml}
+          </td>
+          <td style="text-align:center">
+            ${cleanPhone ? `<a href="${waUrl}" target="_blank" class="btn-wa-chat" title="Chat on WhatsApp"><iconify-icon icon="ph:whatsapp-logo-bold"></iconify-icon></a>` : '—'}
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  // Filter tab events
+  const tabContainer = document.getElementById('order-status-tabs');
+  if (tabContainer) {
+    tabContainer.addEventListener('click', (e) => {
+      const tab = e.target.closest('.filter-tab');
+      if (!tab) return;
+      tabContainer.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentStatusFilter = tab.dataset.status;
+      renderOrdersTable();
+    });
+  }
+
+  window._setOrderStatus = async function(id, status) {
+    try {
+      const res = await fetch(`${API}/admin/orders/${id}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+      if (res.ok) {
+        showToast(`Order #${id} marked as ${status.replace(/_/g,' ')}!`, true);
+        await loadOrders();
+        await loadStats();
+      } else {
+        showToast('Failed to update status', false);
+      }
+    } catch(e) {
+      showToast('Error updating status', false);
+    }
+  };
+
+  /* ── 3. PRODUCTS & STOCK ── */
+  async function loadProducts() {
+    try {
+      const res = await fetch(`${API}/admin/products`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      productsData = await res.json();
+      document.getElementById('stat-products').textContent = productsData.filter(p => p.in_stock).length;
+      renderProductsTable();
+    } catch(e) {}
+  }
+
+  function renderProductsTable() {
+    const tbody = document.getElementById('products-tbody');
+    if (!tbody) return;
+
+    const searchTerm = (document.getElementById('prod-search')?.value || '').toLowerCase().trim();
+    let list = productsData;
+    if (searchTerm) {
+      list = list.filter(p => p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm));
+    }
+
+    if (!list.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            <div class="empty-box">
+              <iconify-icon icon="ph:storefront-bold"></iconify-icon>
+              <p style="font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:4px">No snacks found</p>
+              <button type="button" class="btn-action btn-primary-gold" onclick="document.getElementById('btn-open-add-modal').click()" style="margin-top:10px">
+                + Add First Snack
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = list.map(p => {
+      const isStock = Boolean(p.in_stock && (p.quantity === undefined || p.quantity > 0));
+      const qty = (p.quantity !== undefined && p.quantity !== null) ? p.quantity : 20;
+
+      return `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:12px">
+              <img src="${p.image_url || 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'}" class="product-thumb" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'" />
+              <div>
+                <b style="color:var(--text);font-size:.92rem">${p.name}</b>
+                <div style="font-size:.76rem;color:var(--text-muted);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.description || 'Delicious hostel snack'}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span style="text-transform:capitalize;background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:600">${p.category}</span>
+          </td>
+          <td>
+            <b style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold-light)">₹${p.price}</b>
+          </td>
+          <td>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="window._changeQty(${p.id}, ${qty - 1})">−</button>
+              <input type="number" class="qty-val-input" value="${qty}" onchange="window._changeQty(${p.id}, this.value)" min="0" />
+              <button type="button" class="qty-btn" onclick="window._changeQty(${p.id}, ${qty + 1})">+</button>
+            </div>
+            ${qty <= 5 && qty > 0 ? '<span style="display:block;font-size:.7rem;color:var(--orange);font-weight:700;margin-top:3px">Low Stock!</span>' : ''}
+            ${qty === 0 ? '<span style="display:block;font-size:.7rem;color:var(--red);font-weight:700;margin-top:3px">Zero Stock</span>' : ''}
+          </td>
+          <td>
+            <div class="stock-switch ${isStock ? 'active' : ''}" onclick="window._toggleStock(${p.id}, ${isStock ? 0 : 1})">
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+              <span class="stock-switch-label">${isStock ? 'In Stock' : 'Stock Out'}</span>
+            </div>
+          </td>
+          <td>
+            <div style="display:flex;gap:6px">
+              <button type="button" class="icon-btn" onclick="window._openEditProduct(${p.id})" title="Edit snack"><iconify-icon icon="ph:pencil-simple-bold"></iconify-icon></button>
+              <button type="button" class="icon-btn danger" onclick="window._deleteProduct(${p.id})" title="Delete snack"><iconify-icon icon="ph:trash-bold"></iconify-icon></button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  const searchInput = document.getElementById('prod-search');
+  if (searchInput) searchInput.addEventListener('input', renderProductsTable);
+
+  /* Set available quantity */
+  window._changeQty = async function(id, newQty) {
+    newQty = Math.max(0, parseInt(newQty) || 0);
+    try {
+      const res = await fetch(`${API}/admin/products/${id}/quantity`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ quantity: newQty })
+      });
+      if (res.ok) {
+        showToast(`Quantity updated to ${newQty}!`, true);
+        await loadProducts();
+      }
+    } catch(e) {}
+  };
+
+  /* Toggle Stock in / out */
+  window._toggleStock = async function(id, inStock) {
+    try {
+      const res = await fetch(`${API}/admin/products/${id}/stock`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ in_stock: inStock })
+      });
+      if (res.ok) {
+        showToast(inStock ? 'Snack marked In Stock!' : 'Snack marked Stock Out!', true);
+        await loadProducts();
+      }
+    } catch(e) {}
+  };
+
+  /* Delete Product */
+  window._deleteProduct = async function(id) {
+    if (!confirm('Are you sure you want to remove this snack from the store?')) return;
+    try {
+      const res = await fetch(`${API}/admin/products/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        showToast('Product removed.', true);
+        await loadProducts();
+      }
+    } catch(e) {}
+  };
+
+  /* ── 4. ADD / EDIT PRODUCT MODAL ── */
+  const prodModal = document.getElementById('product-modal');
+  const prodForm = document.getElementById('product-form');
+  const openAddModalBtn = document.getElementById('btn-open-add-modal');
+  const quickAddBtnTop = document.getElementById('btn-quick-add-prod');
+  const closeProdModalBtn = document.getElementById('btn-close-prod-modal');
+
+  function openProductModal(product = null) {
+    document.getElementById('pm-error').textContent = '';
+    if (product) {
+      document.getElementById('prod-modal-title').textContent = 'Edit Snack';
+      document.getElementById('pm-id').value = product.id;
+      document.getElementById('pm-name').value = product.name;
+      document.getElementById('pm-category').value = product.category;
+      document.getElementById('pm-price').value = product.price;
+      document.getElementById('pm-qty').value = product.quantity !== undefined ? product.quantity : 20;
+      document.getElementById('pm-stock').value = product.in_stock ? '1' : '0';
+      document.getElementById('pm-img').value = product.image_url || '';
+      document.getElementById('pm-desc').value = product.description || '';
+      document.getElementById('btn-save-prod').innerHTML = '<iconify-icon icon="ph:check-bold"></iconify-icon> Save Changes';
+    } else {
+      document.getElementById('prod-modal-title').textContent = 'Add New Snack';
+      document.getElementById('pm-id').value = '';
+      prodForm.reset();
+      document.getElementById('pm-qty').value = '25';
+      document.getElementById('pm-stock').value = '1';
+      document.getElementById('btn-save-prod').innerHTML = '<iconify-icon icon="ph:plus-bold"></iconify-icon> Add to Store';
+    }
+    prodModal.classList.add('open');
+  }
+
+  function closeProductModal() {
+    prodModal.classList.remove('open');
+  }
+
+  if (openAddModalBtn) openAddModalBtn.addEventListener('click', () => openProductModal());
+  if (quickAddBtnTop) quickAddBtnTop.addEventListener('click', () => openProductModal());
+  if (closeProdModalBtn) closeProdModalBtn.addEventListener('click', closeProductModal);
+  if (prodModal) {
+    prodModal.addEventListener('click', (e) => {
+      if (e.target === prodModal) closeProductModal();
+    });
+  }
+
+  window._openEditProduct = function(id) {
+    const p = productsData.find(item => item.id === id);
+    if (p) openProductModal(p);
+  };
+
+  window.setPresetImg = function(url) {
+    const inp = document.getElementById('pm-img');
+    if (inp) inp.value = url;
+  };
+
+  if (prodForm) {
+    prodForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('pm-id').value;
+      const name = document.getElementById('pm-name').value.trim();
+      const category = document.getElementById('pm-category').value;
+      const price = parseFloat(document.getElementById('pm-price').value);
+      const quantity = parseInt(document.getElementById('pm-qty').value) || 0;
+      const in_stock = document.getElementById('pm-stock').value === '1';
+      const image_url = document.getElementById('pm-img').value.trim();
+      const description = document.getElementById('pm-desc').value.trim();
+      const errEl = document.getElementById('pm-error');
+      const submitBtn = document.getElementById('btn-save-prod');
+
+      if (!name || isNaN(price)) {
+        errEl.textContent = 'Please fill in product name and valid price.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+
+      const payload = { name, category, price, quantity, in_stock, image_url, description };
+      const url = id ? `${API}/admin/products/${id}` : `${API}/admin/products`;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        submitBtn.disabled = false;
+
+        if (!res.ok) {
+          errEl.textContent = data.error || 'Failed to save product.';
+          return;
+        }
+
+        showToast(id ? 'Snack updated!' : `${name} added to store!`, true);
+        closeProductModal();
+        await loadProducts();
+      } catch(err) {
+        submitBtn.disabled = false;
+        errEl.textContent = 'Server error. Could not save product.';
+      }
+    });
+  }
+
+  /* ── 5. CUSTOMERS ── */
+  async function loadCustomers() {
+    try {
+      const res = await fetch(`${API}/admin/customers`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      const customers = await res.json();
+      const tbody = document.getElementById('customers-tbody');
+      if (!tbody) return;
+
+      if (!customers.length) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-box"><iconify-icon icon="ph:users-bold"></iconify-icon><p>No registered customers yet</p></div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = customers.map((c, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td><b>${c.name}</b></td>
+          <td>${c.email}</td>
+          <td>${c.phone || '—'}</td>
+          <td>${c.hostel_no || '—'} / Room ${c.room_no || '—'}</td>
+          <td><span style="font-weight:700;color:var(--gold-light)">${c.order_count} orders</span></td>
+          <td><b>₹${Number(c.total_spent || 0).toFixed(0)}</b></td>
+          <td style="font-size:.78rem;color:var(--text-muted)">${c.created_at ? new Date(c.created_at).toLocaleDateString('en-IN') : '—'}</td>
+        </tr>
+      `).join("");
+    } catch(e) {}
+  }
+
+  /* ── 6. AUTO-REFRESH EVERY 12 SECONDS ── */
+  setInterval(() => {
+    if (!token) return;
+    loadStats();
+    loadOrders();
+  }, 12000);
+
+})();
+</script>
+</body>
+</html>

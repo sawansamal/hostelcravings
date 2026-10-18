@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hostel Cravings - Premium late-night snacks for hostel life. Maggi, chips, biscuits, waffers and more delivered to your hostel room." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>Hostel Cravings - Luxury Snacks for the Bold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css?v=2.3" />
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<!-- ═══════════════════════════════════════
+     ANIMATED LOADING SCREEN
+     Floating Indian snacks in zero-gravity
+     ═══════════════════════════════════════ -->
+<div id="page-loader" role="status" aria-label="Loading Hostel Cravings">
+
+  <!-- Dark background with subtle slate texture -->
+  <div class="ldr-bg"></div>
+
+  <!-- Sparkle particles -->
+  <div class="ldr-sparkles">
+    <span class="sp sp1"></span><span class="sp sp2"></span><span class="sp sp3"></span>
+    <span class="sp sp4"></span><span class="sp sp5"></span><span class="sp sp6"></span>
+    <span class="sp sp7"></span><span class="sp sp8"></span><span class="sp sp9"></span>
+    <span class="sp sp10"></span><span class="sp sp11"></span><span class="sp sp12"></span>
+    <span class="sp sp13"></span><span class="sp sp14"></span><span class="sp sp15"></span>
+  </div>
+
+  <!-- Floating snack packages -->
+  <div class="ldr-scene">
+
+    <!-- Maggi packet — centre -->
+    <div class="ldr-item ldr-maggi">
+      <div class="pkg pkg-maggi">
+        <div class="pkg-top">Maggi</div>
+        <div class="pkg-mid">2-Minute<br><span>noodles</span></div>
+        <div class="pkg-bot">Masala</div>
+      </div>
+    </div>
+
+    <!-- Kurkure packet — left-centre -->
+    <div class="ldr-item ldr-kurkure">
+      <div class="pkg pkg-kurkure">
+        <div class="pkg-top">Kurkure</div>
+        <div class="pkg-mid">Masala<br>Munch</div>
+      </div>
+    </div>
+
+    <!-- Oreo — right -->
+    <div class="ldr-item ldr-oreo">
+      <div class="pkg pkg-oreo">
+        <div class="pkg-top">OREO</div>
+        <div class="oreo-cookies">
+          <div class="oc"></div><div class="oc"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cream Cracker — top-left -->
+    <div class="ldr-item ldr-cracker">
+      <div class="pkg pkg-cracker">
+        <div class="pkg-top">Cream<br>Cracker</div>
+        <div class="cracker-biscuit"></div>
+      </div>
+    </div>
+
+    <!-- Lotte Choco Pie — bottom-left -->
+    <div class="ldr-item ldr-choco">
+      <div class="pkg pkg-choco">
+        <div class="pkg-top">Lotte</div>
+        <div class="pkg-mid">Choco<br>Pie</div>
+      </div>
+    </div>
+
+    <!-- Waffy — right-bottom -->
+    <div class="ldr-item ldr-waffy">
+      <div class="pkg pkg-waffy">
+        <div class="pkg-top">Waffy</div>
+        <div class="waffy-layers"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <!-- Chips bowl -->
+    <div class="ldr-item ldr-bowl-chips">
+      <div class="ldr-bowl">
+        <div class="bowl-shape">
+          <div class="chip c1"></div><div class="chip c2"></div><div class="chip c3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Peanuts bowl -->
+    <div class="ldr-item ldr-bowl-nuts">
+      <div class="ldr-bowl">
+        <div class="bowl-shape nuts-bowl">
+          <div class="nut n1"></div><div class="nut n2"></div><div class="nut n3"></div><div class="nut n4"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drifting loose snacks -->
+    <div class="ldr-loose ldr-chip la1"></div>
+    <div class="ldr-loose ldr-chip la2"></div>
+    <div class="ldr-loose ldr-chip la3"></div>
+    <div class="ldr-loose ldr-chip la4"></div>
+    <div class="ldr-loose ldr-kurk la5"></div>
+    <div class="ldr-loose ldr-kurk la6"></div>
+    <div class="ldr-loose ldr-kurk la7"></div>
+    <div class="ldr-loose ldr-pnut la8"></div>
+    <div class="ldr-loose ldr-pnut la9"></div>
+    <div class="ldr-loose ldr-oreo-loose la10"></div>
+    <div class="ldr-loose ldr-oreo-loose la11"></div>
+    <div class="ldr-loose ldr-crumb la12"></div>
+    <div class="ldr-loose ldr-crumb la13"></div>
+    <div class="ldr-loose ldr-crumb la14"></div>
+
+  </div><!-- /ldr-scene -->
+
+  <!-- LOADING text -->
+  <div class="ldr-text-wrap">
+    <span class="ldr-brand">Hostel Cravings</span>
+    <div class="ldr-loading-row">
+      <span class="ldr-loading-txt">LOADING</span>
+      <span class="ldr-dots"><span>.</span><span>.</span><span>.</span></span>
+      <span class="ldr-snack-bounce">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="12" cy="13" rx="8" ry="5" fill="#c9a84c" opacity="0.9"/>
+          <ellipse cx="12" cy="11" rx="8" ry="5" fill="#e8c76e"/>
+          <ellipse cx="12" cy="9"  rx="6" ry="3" fill="#c9a84c" opacity="0.7"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+</div><!-- /page-loader -->
+
+
+<!-- MOBILE MENU -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+  <button class="mobile-menu-close" aria-label="Close menu">
+    <iconify-icon icon="ph:x-bold"></iconify-icon>
+  </button>
+  <a href="#hero">Home</a>
+  <a href="#features">Why Us</a>
+  <a href="#products">Menu</a>
+  <a href="#faq">FAQ</a>
+  <a href="#" id="mobile-cart-btn" style="font-size:1.2rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px">
+    <iconify-icon icon="ph:shopping-bag-bold"></iconify-icon>
+    My Cart (<span class="mobile-cart-count">0</span>)
+  </a>
+  <a href="#" id="mobile-orders-btn" style="font-size:1.2rem;color:var(--text-secondary);display:none;align-items:center;gap:8px">
+    <iconify-icon icon="ph:package-bold"></iconify-icon>
+    My Orders
+  </a>
+  <a href="#" id="mobile-login-btn" style="font-size:1.2rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px">
+    <iconify-icon icon="ph:user-bold"></iconify-icon>
+    <span id="mobile-login-text">Login</span>
+  </a>
+  <a href="#" id="mobile-logout-btn" style="font-size:1.2rem;color:#ef4444;display:none;align-items:center;gap:8px">
+    <iconify-icon icon="ph:sign-out-bold"></iconify-icon>
+    Log out
+  </a>
+  <a href="#" id="mobile-policies-btn" style="font-size:1.2rem;color:var(--text-secondary)">Policies</a>
+  <a href="https://wa.me/918143995997?text=Hi%20Hostel%20Cravings!%20I%20want%20to%20order!" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" style="margin-top:8px;justify-content:center;font-size:1rem;padding:14px 28px;border-radius:40px;text-decoration:none;display:flex;align-items:center;gap:10px">
+    <iconify-icon icon="ph:whatsapp-logo-bold"></iconify-icon>
+    Order on WhatsApp
+  </a>
+</nav>
+
+
+<!-- LOGIN MODAL -->
+<div class="login-modal-overlay" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" aria-hidden="true">
+  <div class="login-modal">
+    <button class="login-modal-close" id="login-modal-close" aria-label="Close login">
+      <iconify-icon icon="ph:x-bold"></iconify-icon>
+    </button>
+    <div class="login-modal-logo">
+      <div class="logo-icon"><iconify-icon icon="ph:cookie-bold"></iconify-icon></div>
+    </div>
+    <h2 class="login-modal-title" id="login-modal-title">Welcome Back</h2>
+    <p class="login-modal-sub" id="login-modal-sub">Login to track your orders &amp; save your favourites</p>
+
+    <!-- LOGIN FORM -->
+    <form class="login-form" id="login-form" novalidate>
+      <div class="login-field">
+        <label for="login-email">Email / Phone</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:user-bold"></iconify-icon>
+          <input type="text" id="login-email" name="email" placeholder="you@hostel.in" autocomplete="username" required />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="login-pass">Password</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:lock-bold"></iconify-icon>
+          <input type="password" id="login-pass" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          <button type="button" class="pass-toggle" id="pass-toggle" aria-label="Toggle password visibility">
+            <iconify-icon icon="ph:eye-bold" id="pass-eye"></iconify-icon>
+          </button>
+        </div>
+      </div>
+      <div class="login-error" id="login-error" aria-live="polite"></div>
+      <button type="submit" class="btn btn-primary login-submit" id="login-submit-btn">
+        <iconify-icon icon="ph:sign-in-bold"></iconify-icon>
+        Login
+      </button>
+    </form>
+
+    <!-- REGISTER FORM (Hidden by default) -->
+    <form class="login-form" id="register-form" novalidate style="display:none">
+      <div class="login-field">
+        <label for="reg-name">Full Name</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:user-bold"></iconify-icon>
+          <input type="text" id="reg-name" name="name" placeholder="Your name" required />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="reg-email">Email</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:envelope-simple-bold"></iconify-icon>
+          <input type="email" id="reg-email" name="email" placeholder="you@hostel.in" required />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="reg-phone">Phone number</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:phone-bold"></iconify-icon>
+          <input type="tel" id="reg-phone" name="phone" placeholder="9876543210" required />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="reg-room">Room / Hostel</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:door-bold"></iconify-icon>
+          <input type="text" id="reg-room" name="room" placeholder="e.g. BS11 Room 204" required />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="reg-pass">Create Password</label>
+        <div class="login-input-wrap">
+          <iconify-icon icon="ph:lock-bold"></iconify-icon>
+          <input type="password" id="reg-pass" name="password" placeholder="Min. 4 characters" required />
+        </div>
+      </div>
+      <div class="login-error" id="register-error" aria-live="polite"></div>
+      <button type="submit" class="btn btn-primary login-submit" id="register-submit-btn">
+        <iconify-icon icon="ph:user-plus-bold"></iconify-icon>
+        Create Account
+      </button>
+    </form>
+
+    <div class="login-divider"><span>or</span></div>
+    <button type="button" class="btn btn-outline login-guest" id="login-register-toggle-btn">
+      <iconify-icon icon="ph:user-plus-bold" id="toggle-auth-icon"></iconify-icon>
+      <span id="toggle-auth-text">Don't have account? Create new account</span>
+    </button>
+    <p class="login-footer-text">By continuing you agree to our <a href="#policies-modal" id="login-policies-link">Policies</a></p>
+  </div>
+</div>
+
+<!-- POLICIES MODAL -->
+<div class="pol-overlay" id="policies-modal" role="dialog" aria-modal="true" aria-labelledby="policies-title" aria-hidden="true">
+  <div class="pol-panel">
+    <button class="pol-close" id="policies-modal-close" aria-label="Close policies">
+      <iconify-icon icon="ph:x-bold"></iconify-icon>
+    </button>
+    <h2 class="pol-heading" id="policies-title">Policies &amp; terms</h2>
+    <p class="pol-sub">The short, friendly version.</p>
+    <div class="pol-cards">
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x1F4B5;</span> Cash on delivery</h3>
+        <ul class="pol-list">
+          <li>All orders are Cash on Delivery (COD). UPI at the door is also accepted.</li>
+          <li>Please keep exact change ready where possible.</li>
+          <li>Repeated unpaid or refused orders may lead to your account being blocked.</li>
+        </ul>
+      </div>
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x1F6AA;</span> Delivery</h3>
+        <ul class="pol-list">
+          <li>We deliver only inside the hostel premises, to the room number you provide.</li>
+          <li>Delivery usually happens within 15&ndash;45 minutes depending on availability.</li>
+          <li>If you're not in your room, we'll try calling the phone number you entered.</li>
+        </ul>
+      </div>
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x274C;</span> Cancellations</h3>
+        <ul class="pol-list">
+          <li>You can cancel any time before the order is marked 'Out for delivery' &mdash; just message us on WhatsApp.</li>
+          <li>We may cancel an order if an item goes out of stock; you'll be informed.</li>
+        </ul>
+      </div>
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x1F504;</span> Returns &amp; refunds</h3>
+        <ul class="pol-list">
+          <li>Damaged, expired or wrong items? Tell us at the time of delivery and we'll replace them or not charge you.</li>
+          <li>Opened food items can't be returned for hygiene reasons.</li>
+        </ul>
+      </div>
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x1F3F7;&#xFE0F;</span> Prices &amp; stock</h3>
+        <ul class="pol-list">
+          <li>Prices shown are final and include everything &mdash; no delivery fee.</li>
+          <li>Stock is updated manually and may occasionally be off by a little.</li>
+        </ul>
+      </div>
+      <div class="pol-card">
+        <h3 class="pol-card-title"><span class="pol-emoji">&#x1F4DC;</span> Terms of use</h3>
+        <ul class="pol-list">
+          <li>This is a small student-run shop for hostel residents.</li>
+          <li>By placing an order you agree to receive it and pay on delivery.</li>
+          <li>Your name, phone and room number are used only to deliver your order.</li>
+          <li>We may update these policies at any time.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="pol-close-btn" id="policies-close-bottom">Got it</button>
+  </div>
+</div>
+
+<!-- MY ORDERS MODAL -->
+<div class="orders-overlay" id="orders-modal" role="dialog" aria-modal="true" aria-labelledby="orders-modal-title" aria-hidden="true">
+  <div class="orders-panel">
+    <button class="orders-close" id="orders-modal-close" aria-label="Close orders">
+      <iconify-icon icon="ph:x-bold"></iconify-icon>
+    </button>
+    
+    <div class="orders-header">
+      <div class="orders-header-info">
+        <div class="orders-header-icon">
+          <iconify-icon icon="ph:package-bold"></iconify-icon>
+        </div>
+        <div>
+          <h2 class="orders-title" id="orders-modal-title">My Orders</h2>
+          <p class="orders-sub">Real-time status of your late-night hostel cravings</p>
+        </div>
+      </div>
+      <button type="button" class="btn-refresh-orders" id="btn-refresh-orders" title="Refresh order status">
+        <iconify-icon icon="ph:arrows-clockwise-bold" id="orders-refresh-icon"></iconify-icon>
+        <span>Refresh</span>
+      </button>
+    </div>
+
+    <!-- Active Orders List -->
+    <div class="orders-content" id="orders-content">
+      <!-- Injected via JS -->
+    </div>
+
+    <div class="orders-footer">
+      <a href="https://wa.me/918143995997" target="_blank" rel="noopener noreferrer" class="orders-wa-support">
+        <iconify-icon icon="ph:whatsapp-logo-bold"></iconify-icon>
+        Need help with an order? Message us on WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar" role="banner">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Hostel Cravings Home">
+        <div class="logo-icon">
+          <iconify-icon icon="ph:cookie-bold" aria-hidden="true"></iconify-icon>
+        </div>
+        <div class="logo-text">
+          Hostel Cravings
+          <span>Premium Hostel Snacks</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#features">Why Us</a>
+        <a href="#products">Menu</a>        <a href="#faq">FAQ</a>
+      </nav>
+
+      <!-- AUTH NAV GROUP -->
+      <div class="auth-nav" id="auth-nav">
+        <!-- Policies -->
+        <button class="auth-nav-link" id="policies-btn" aria-label="View policies">
+          Policies
+        </button>
+
+        <!-- Login (logged-out state) -->
+        <button class="auth-nav-login" id="login-btn" aria-label="Login to your account">
+          <iconify-icon icon="ph:user-bold" aria-hidden="true"></iconify-icon>
+          Login
+        </button>
+
+        <!-- My Orders (logged-in state, hidden by default) -->
+        <button class="auth-nav-orders" id="my-orders-btn" aria-label="My orders" style="display:none">
+          <iconify-icon icon="ph:package-bold" aria-hidden="true"></iconify-icon>
+          <span>My Orders</span>
+        </button>
+
+        <!-- Logout button (logged-in state) -->
+        <button class="auth-nav-logout" id="logout-btn" aria-label="Log out" title="Log out" style="display:none">
+          <iconify-icon icon="ph:sign-out-bold" aria-hidden="true"></iconify-icon>
+        </button>
+
+        <!-- Cart -->
+        <button class="auth-nav-cart" id="cart-btn" aria-label="View cart">
+          <iconify-icon icon="ph:shopping-bag-bold" aria-hidden="true"></iconify-icon>
+          Cart
+          <span class="cart-badge" id="cart-badge">0</span>
+        </button>
+      </div>
+
+      <button class="nav-hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><iconify-icon icon="ph:star-four-bold"></iconify-icon> Maggi Noodles</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:lightning-bold"></iconify-icon> Midnight Delivery</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:cookie-bold"></iconify-icon> Biscuits &amp; Waffers</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:flame-bold"></iconify-icon> Hostel Favourite</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:medal-bold"></iconify-icon> Chips &amp; Crisps</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:cake-bold"></iconify-icon> Cakes &amp; Treats</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:star-four-bold"></iconify-icon> Maggi Noodles</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:lightning-bold"></iconify-icon> Midnight Delivery</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:cookie-bold"></iconify-icon> Biscuits &amp; Waffers</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:flame-bold"></iconify-icon> Hostel Favourite</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:medal-bold"></iconify-icon> Chips &amp; Crisps</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:cake-bold"></iconify-icon> Cakes &amp; Treats</div>
+    <div class="marquee-dot"></div>
+  </div>
+</div>
+
+<!-- HERO Ã¢â‚¬â€ bg: biscuits & waffers -->
+<section class="hero" id="hero" aria-label="Hero section">
+  <div class="hero-bg" aria-hidden="true">
+    <!-- Indian snacks flat-lay: Maggi, Kurkure, Oreo, Lotte Choco Pie, chips, waffers, biscuits -->
+    <img
+      src="/img/hero-bg.jpg"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-bg-overlay"></div>
+  </div>
+
+
+  <!-- Floating snack bubbles on right side of hero -->
+  <div class="hero-snack-bubbles" aria-hidden="true">
+    <div class="snack-bubble sb-1">
+      <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="sb-label">Chips</div>
+    </div>
+    <div class="snack-bubble sb-2">
+      <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="sb-label">Maggi</div>
+    </div>
+    <div class="snack-bubble sb-3">
+      <img src="https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="sb-label">Chocolate</div>
+    </div>
+    <div class="snack-bubble sb-4">
+      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="sb-label">Waffers</div>
+    </div>
+    <div class="snack-bubble sb-5">
+      <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="sb-label">Biscuits</div>
+    </div>
+  </div>
+  <div class="hero-particles" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <iconify-icon icon="ph:star-four-fill" aria-hidden="true"></iconify-icon>
+        Hostel's Most Craved
+      </div>
+      <h1 class="hero-headline">
+        When the Night
+        <em class="gold-text">Gets Hungry.</em>
+      </h1>
+      <p class="hero-sub">
+        Premium late-night snacks delivered straight to your hostel room. Maggi, chips, biscuits, waffers, cakes Ã¢â‚¬â€ everything your midnight hunger demands.
+      </p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary pulse" id="hero-order-btn">
+          <iconify-icon icon="ph:lightning-bold" aria-hidden="true"></iconify-icon>
+          Explore the Menu
+        </a>
+        <a href="https://wa.me/918143995997?text=Hi%20Hostel%20Cravings!%20I%20want%20to%20place%20an%20order%20%F0%9F%8D%AA" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" id="hero-whatsapp-btn" aria-label="Order on WhatsApp">
+          <iconify-icon icon="ph:whatsapp-logo-bold" aria-hidden="true"></iconify-icon>
+          Order on WhatsApp
+        </a>
+      </div>
+      <div class="hero-stats" aria-label="Key statistics">
+        <div class="hero-stat-item">
+          <div class="hero-stat-number" data-count="500" data-suffix="+">500+</div>
+          <div class="hero-stat-label">Happy Hostellers</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-number" data-count="30" data-suffix="+">30+</div>
+          <div class="hero-stat-label">Snack Items</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-number">4.9&#9733;</div>
+          <div class="hero-stat-label">Avg. Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <iconify-icon icon="ph:arrow-down-bold"></iconify-icon>
+    Scroll Down
+  </div>
+</section>
+
+<!-- FEATURES / WHY US Ã¢â‚¬â€ with animated snack showcase filling the space -->
+<section class="features" id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="features-header">
+      <div class="section-label">Why Hostel Cravings</div>
+      <h2 class="section-title" id="features-title">Built for the <span class="gold-text">Bold &amp; Hungry</span></h2>
+      <p class="section-subtitle">We don't do ordinary. Every snack is picked with obsessive attention to quality, flavour, and that perfect late-night satisfaction.</p>
+    </div>
+
+    <!-- ANIMATED SNACK SHOWCASE (fills the previously blank space) -->
+    <div class="snack-showcase" aria-hidden="true">
+      <div class="snack-orbit">
+        <!-- Center logo pulse -->
+        <div class="orbit-center">
+          <iconify-icon icon="ph:cookie-bold"></iconify-icon>
+          <div class="orbit-ping"></div>
+        </div>
+        <!-- Orbiting snack images -->
+        <div class="orbit-ring orbit-ring-1">
+          <div class="orbit-item oi-1">
+            <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=120&q=80&auto=format&fit=crop" alt="Chips" loading="lazy" />
+            <span>Chips</span>
+          </div>
+          <div class="orbit-item oi-2">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=120&q=80&auto=format&fit=crop" alt="Maggi" loading="lazy" />
+            <span>Maggi</span>
+          </div>
+          <div class="orbit-item oi-3">
+            <img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=120&q=80&auto=format&fit=crop" alt="Popcorn" loading="lazy" />
+            <span>Popcorn</span>
+          </div>
+        </div>
+        <div class="orbit-ring orbit-ring-2">
+          <div class="orbit-item oi-4">
+            <img src="https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=120&q=80&auto=format&fit=crop" alt="Chocolate" loading="lazy" />
+            <span>Chocolate</span>
+          </div>
+          <div class="orbit-item oi-5">
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=120&q=80&auto=format&fit=crop" alt="Waffles" loading="lazy" />
+            <span>Waffers</span>
+          </div>
+          <div class="orbit-item oi-6">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=120&q=80&auto=format&fit=crop" alt="Biscuits" loading="lazy" />
+            <span>Biscuits</span>
+          </div>
+          <div class="orbit-item oi-7">
+            <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=120&q=80&auto=format&fit=crop" alt="Cakes" loading="lazy" />
+            <span>Cakes</span>
+          </div>
+        </div>
+        <!-- Decorative rings -->
+        <div class="deco-ring dr-1"></div>
+        <div class="deco-ring dr-2"></div>
+        <div class="deco-ring dr-3"></div>
+        <!-- Floating labels -->
+        <div class="float-tag ft-1"><iconify-icon icon="ph:lightning-bold"></iconify-icon> 15 min delivery</div>
+        <div class="float-tag ft-2"><iconify-icon icon="ph:star-fill"></iconify-icon> 4.9 rated</div>
+        <div class="float-tag ft-3"><iconify-icon icon="ph:package-bold"></iconify-icon> 30+ items</div>
+      </div>
+    </div>
+
+    <!-- Feature cards below -->
+    <div class="features-grid">
+      <article class="glass-card feature-card">
+        <div class="feature-icon-wrap"><iconify-icon icon="ph:leaf-bold" aria-hidden="true"></iconify-icon></div>
+        <h3 class="feature-title">Premium Quality</h3>
+        <p class="feature-desc">Every item is sourced from trusted, high-quality suppliers. No compromises on taste Ã¢â‚¬â€ from the first bite to the very last crumb.</p>
+      </article>
+      <article class="glass-card feature-card">
+        <div class="feature-icon-wrap"><iconify-icon icon="ph:hand-heart-bold" aria-hidden="true"></iconify-icon></div>
+        <h3 class="feature-title">Handpicked Selection</h3>
+        <p class="feature-desc">Our menu is carefully picked by snack lovers who live the hostel life. Only the best make it to your door Ã¢â‚¬â€ or rather, your room.</p>
+      </article>
+      <article class="glass-card feature-card">
+        <div class="feature-icon-wrap"><iconify-icon icon="ph:lightning-bold" aria-hidden="true"></iconify-icon></div>
+        <h3 class="feature-title">Midnight Fast Delivery</h3>
+        <p class="feature-desc">Craving hits at 2 AM? We've got you. Lightning-fast delivery that respects both your hunger and your sleep schedule.</p>
+      </article>
+      <article class="glass-card feature-card">
+        <div class="feature-icon-wrap"><iconify-icon icon="ph:piggy-bank-bold" aria-hidden="true"></iconify-icon></div>
+        <h3 class="feature-title">Hostel-Pocket Friendly</h3>
+        <p class="feature-desc">Premium taste, fair pricing Ã¢â‚¬â€ because hostel life is already expensive enough. From Rs 20 biscuits to combo packs, we have it all.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products" aria-labelledby="products-title">
+  <div class="container">
+    <div class="products-header">
+      <div class="section-label">The Menu</div>
+      <h2 class="section-title" id="products-title">Tonight's <span class="gold-text">Finest Picks</span></h2>
+      <p class="section-subtitle">From smoky chips to Maggi noodles Ã¢â‚¬â€ every item is a midnight treat for your hostel room.</p>
+      <div class="products-tabs" role="tablist" aria-label="Product category filter">
+        <button class="tab-btn active" data-filter="all" role="tab" id="tab-all">All Items</button>
+        <button class="tab-btn" data-filter="chips" role="tab" id="tab-chips">Chips &amp; Crisps</button>
+        <button class="tab-btn" data-filter="biscuits" role="tab" id="tab-biscuits">Biscuits &amp; Wafers</button>
+        <button class="tab-btn" data-filter="sweet" role="tab" id="tab-sweet">Sweet &amp; Chocolate</button>
+        <button class="tab-btn" data-filter="drinks" role="tab" id="tab-drinks">Drinks</button>
+        <button class="tab-btn" data-filter="instant" role="tab" id="tab-instant">Instant Eats</button>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid" role="list" aria-label="Product listings">
+
+      <article class="product-card" data-category="chips" role="listitem" id="product-1">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-hot">Hot</span>
+          <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=600&q=75&auto=format&fit=crop" alt="Spicy Masala Chips" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Spicy Masala Chips</h3>
+          <p class="product-desc">Bold, fiery, with the perfect crunch. The midnight classic.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;49 <small>/ pack</small></div>
+            <button class="product-add-btn" aria-label="Add Spicy Masala Chips to cart" id="add-btn-1">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="sweet" role="listitem" id="product-2">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-best">Best Seller</span>
+          <img src="https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=600&q=75&auto=format&fit=crop" alt="Dark Chocolate Bar" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Dark Chocolate Bar</h3>
+          <p class="product-desc">Rich, velvety dark chocolate. Study fuel that actually tastes good.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;89 <small>/ bar</small></div>
+            <button class="product-add-btn" aria-label="Add Dark Chocolate Bar to cart" id="add-btn-2">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="drinks" role="listitem" id="product-3">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-new">New</span>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=75&auto=format&fit=crop" alt="Cold Brew Coffee bottle" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Cold Brew Coffee</h3>
+          <p class="product-desc">Smooth, strong cold brew. For the warriors who study till sunrise.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;79 <small>/ bottle</small></div>
+            <button class="product-add-btn" aria-label="Add Cold Brew Coffee to cart" id="add-btn-3">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="instant" role="listitem" id="product-4">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-best">Hostel Fav</span>
+          <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&q=75&auto=format&fit=crop" alt="Maggi Instant Noodles" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Maggi Noodles Pack</h3>
+          <p class="product-desc">The OG hostel staple. Ready in 2 minutes, gone even faster.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;39 <small>/ pack</small></div>
+            <button class="product-add-btn" aria-label="Add Maggi Noodles to cart" id="add-btn-4">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="sweet" role="listitem" id="product-5">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-hot">Hot</span>
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=75&auto=format&fit=crop" alt="caramel waffer cookies" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Caramel Waffer Biscuits</h3>
+          <p class="product-desc">Buttery caramel waffer cookies. One bite and you are hooked.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;69 <small>/ box</small></div>
+            <button class="product-add-btn" aria-label="Add Caramel Waffer Biscuits to cart" id="add-btn-5">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="chips" role="listitem" id="product-6">
+        <div class="product-img-wrap">
+          <span class="product-badge badge-new">New</span>
+          <img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=600&q=75&auto=format&fit=crop" alt="Cheese Popcorn pack" loading="lazy" width="600" height="400" />
+          <div class="product-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Cheese Popcorn Pack</h3>
+          <p class="product-desc">Movie-level indulgence, hostel-room comfort. Dangerously addictive.</p>
+          <div class="product-footer">
+            <div class="product-price">&#8377;55 <small>/ bag</small></div>
+            <button class="product-add-btn" aria-label="Add Cheese Popcorn to cart" id="add-btn-6">
+              <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-left reveal reveal-left">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title" id="faq-title">Got <span class="gold-text">Questions?</span></h2>
+        <p>Everything you need to know before your first craving hits. If we haven't answered it, just DM us.</p>
+        <a href="#contact" class="btn btn-outline" id="faq-contact-btn" style="margin-top:8px">
+          <iconify-icon icon="ph:chat-circle-dots-bold" aria-hidden="true"></iconify-icon>
+          Contact Us
+        </a>
+      </div>
+      <div class="faq-right reveal reveal-right">
+        <div class="faq-list" role="list">
+
+          <div class="faq-item" role="listitem" id="faq-1">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+              <span>How fast is delivery to my hostel room?</span>
+              <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
+            </div>
+            <div class="faq-answer"><div class="faq-answer-inner">We deliver within <strong>10 minutes</strong>! We also accept <strong>pre-orders</strong> so your snacks are ready exactly when you need them. <strong>Door delivery</strong> is available for <strong>BS11</strong> residents. <strong>Gate delivery</strong> for <strong>BS12 &amp; BS13</strong>. Absolutely <strong>no delivery charges</strong> — ever.</div></div>
+
+          </div>
+
+          <div class="faq-item" role="listitem" id="faq-2">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+              <span>What is the minimum order amount?</span>
+              <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
+            </div>
+            <div class="faq-answer"><div class="faq-answer-inner">Minimum order amount is just <strong>&#8377;30</strong> â€” we keep it affordable for everyone. And there is <strong>no upper limit</strong> â€” order as big a stock as you want! Bulk orders, hostel supplies, event stocking â€” we handle it all without any cap. Absolutely <strong>no delivery charges</strong> — ever.</div></div>
+          </div>
+
+          <div class="faq-item" role="listitem" id="faq-3">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+              <span>Do you have Maggi, chips, biscuits and packaged food?</span>
+              <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
+            </div>
+            <div class="faq-answer"><div class="faq-answer-inner">Yes! Maggi is our #1 bestseller. We also stock a wide range of chips, biscuits, waffle cookies, cakes, chocolates, cold drinks and more Ã¢â‚¬â€ all packaged and ready to devour.</div></div>
+          </div>
+
+          <div class="faq-item" role="listitem" id="faq-4">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+              <span>What payment methods do you accept?</span>
+              <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
+            </div>
+            <div class="faq-answer"><div class="faq-answer-inner">We accept <strong>UPI</strong> (PhonePe, GPay, Paytm) and <strong>cash on delivery</strong>. No UPI? No problem â€” just pay when you receive your order.</div></div>
+          </div>
+
+          <div class="faq-item" role="listitem" id="faq-5">
+            <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+              <span>Can I suggest snacks for you to stock?</span>
+              <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
+            </div>
+            <div class="faq-answer"><div class="faq-answer-inner">Yes! We love community input. DM us on Instagram with your craving request and if we get enough votes, we will add it to the menu. The menu is literally built by hostellers, for hostellers.</div></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="section-label">Ready to Indulge?</div>
+      <h2 class="cta-title" id="cta-title">Your Next Craving <br /><span class="gold-text">Starts Here.</span></h2>
+      <p class="cta-sub">Don't let another midnight pass with nothing to eat. Upgrade your hostel experience - one snack at a time.</p>
+      <div class="cta-actions">
+        <a href="#products" class="btn btn-primary" id="cta-order-btn">
+          <iconify-icon icon="ph:lightning-bold" aria-hidden="true"></iconify-icon>
+          Order Right Now
+        </a>
+        <a href="https://wa.me/918143995997?text=Hi%20Hostel%20Cravings!%20I%20want%20to%20place%20an%20order%20%F0%9F%8D%AA" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" id="cta-whatsapp-btn" aria-label="Order on WhatsApp">
+          <iconify-icon icon="ph:whatsapp-logo-bold" aria-hidden="true"></iconify-icon>
+          Order on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <div class="logo-icon"><iconify-icon icon="ph:cookie-bold" aria-hidden="true"></iconify-icon></div>
+          <div class="logo-text">Hostel Cravings<span>Premium Hostel Snacks</span></div>
+        </div>
+        <p class="footer-tagline">Turning ordinary hostel nights into premium experiences, one snack at a time. For the bold. For the hungry. For you.</p>
+        <div class="footer-social" aria-label="Social media links">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><iconify-icon icon="ph:instagram-logo-bold" aria-hidden="true"></iconify-icon></a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Twitter X"><iconify-icon icon="ph:x-logo-bold" aria-hidden="true"></iconify-icon></a>
+          <a href="https://wa.me" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="WhatsApp"><iconify-icon icon="ph:whatsapp-logo-bold" aria-hidden="true"></iconify-icon></a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube"><iconify-icon icon="ph:youtube-logo-bold" aria-hidden="true"></iconify-icon></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Menu</div>
+        <nav class="footer-links" aria-label="Menu links">
+          <a href="#products"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Chips &amp; Crisps</a>
+          <a href="#products"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Chocolate &amp; Sweet</a>
+          <a href="#products"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Beverages</a>
+          <a href="#products"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Maggi &amp; Noodles</a>
+          <a href="#products"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Biscuits &amp; Waffers</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <nav class="footer-links" aria-label="Company links">
+          <a href="#features"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Why Us</a>
+          <a href="#faq"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>FAQ</a>
+          <a href="#contact"><iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>Contact</a>
+          <a href="/admin" target="_blank" style="color:var(--gold-primary);font-weight:600"><iconify-icon icon="ph:shield-check-bold" aria-hidden="true"></iconify-icon>Owner Hub</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-links" style="gap:14px">
+          <a href="https://instagram.com/hostel.cravings" target="_blank" rel="noopener noreferrer" style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--text-secondary);text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='var(--text-secondary)'"><iconify-icon icon="ph:instagram-logo-bold" style="color:var(--gold-primary)" aria-hidden="true"></iconify-icon>@hostel.cravings</a>
+          <a href="https://wa.me/918143995997" target="_blank" rel="noopener noreferrer" style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--text-secondary);text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='var(--text-secondary)'"><iconify-icon icon="ph:phone-bold" style="color:var(--gold-primary)" aria-hidden="true"></iconify-icon>+91 8143995997</a>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:.88rem;color:var(--text-secondary)"><iconify-icon icon="ph:map-pin-bold" style="color:var(--gold-primary);margin-top:2px" aria-hidden="true"></iconify-icon>Lovely Professional University</div>
+
+          <div style="margin-top:4px;font-size:.78rem;color:var(--text-muted);display:flex;gap:6px;align-items:center"><iconify-icon icon="ph:clock-bold" aria-hidden="true"></iconify-icon>Open: 6 PM to 3 AM daily</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&#169; 2024 Hostel Cravings. All rights reserved.</div>
+      <div>Crafted with <iconify-icon icon="ph:heart-fill" style="color:var(--gold-primary)" aria-hidden="true"></iconify-icon> for hostellers everywhere</div>
+      <div><a href="#policies-modal" class="footer-policy-link">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="#policies-modal" class="footer-policy-link">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/admin" target="_blank" style="color:var(--gold-primary);font-weight:600"><iconify-icon icon="ph:shield-check-bold"></iconify-icon> Owner Portal</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART / CHECKOUT MODAL — Two-column layout -->
+<div class="cart-overlay" id="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title" aria-hidden="true">
+  <div class="cart-panel">
+
+    <!-- Close -->
+    <button class="cart-close" id="cart-modal-close" aria-label="Close cart">
+      <iconify-icon icon="ph:x-bold"></iconify-icon>
+    </button>
+
+    <!-- LEFT — Items list -->
+    <div class="cart-left">
+      <h2 class="cart-heading" id="cart-modal-title">Your cart</h2>
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+    <!-- RIGHT — Checkout card -->
+    <div class="cart-right">
+      <div class="cart-checkout-card">
+
+        <!-- Total row -->
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-amount" id="cart-total-display">₹0</span>
+        </div>
+        <div class="cart-delivery-badge">
+          <span class="cart-delivery-icon">&#x1F4B5;</span>
+          Cash on delivery &middot; no delivery fee
+        </div>
+
+        <!-- Auth notice banner if logged out -->
+        <div class="cart-auth-notice" id="cart-auth-notice" style="display:none">
+          <div class="can-icon"><iconify-icon icon="ph:lock-key-bold"></iconify-icon></div>
+          <div class="can-text">
+            <strong>Login Required</strong>
+            <span>Login or sign up to place order</span>
+          </div>
+          <button type="button" class="can-btn" id="cart-auth-login-btn">Login / Sign Up</button>
+        </div>
+
+        <!-- Form -->
+        <form id="checkout-form" novalidate class="cart-form">
+          <input type="text" id="co-name" class="cart-input" placeholder="Your name" required />
+          <input type="tel" id="co-phone" class="cart-input" placeholder="Phone number" required />
+          <input type="text" id="co-room" class="cart-input" placeholder="Room / block (e.g. B-214)" required />
+          <textarea id="co-notes" class="cart-input cart-textarea" placeholder="Notes (optional)" rows="3"></textarea>
+
+          <div class="cart-error" id="checkout-error" aria-live="polite"></div>
+
+          <button type="submit" class="cart-btn-cod" id="checkout-submit-btn">
+            Place order (COD)
+          </button>
+        </form>
+
+        <a href="https://wa.me/918143995997?text=Hi%20Hostel%20Cravings!%20I%20want%20to%20place%20an%20order!" target="_blank" rel="noopener noreferrer" class="cart-btn-wa" id="cart-wa-order-btn">
+          <iconify-icon icon="ph:whatsapp-logo-bold"></iconify-icon>
+          Order via WhatsApp instead
+        </a>
+
+        <p class="cart-policy-note">
+          By ordering you agree to our
+          <button type="button" id="cart-policies-link" class="cart-policy-btn">policies</button>.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FLOATING WHATSAPP BUTTON -->
+
+<a
+  href="https://wa.me/918143995997?text=Hi%20Hostel%20Cravings!%20I%20want%20to%20place%20an%20order%20%F0%9F%8D%AA"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="whatsapp-float"
+  id="whatsapp-float"
+  aria-label="Order on WhatsApp"
+>
+  <iconify-icon icon="ph:whatsapp-logo-bold" aria-hidden="true"></iconify-icon>
+  <span class="whatsapp-float-label">Order on WhatsApp</span>
+  <span class="whatsapp-float-ping"></span>
+</a>
+
+<script src="js/main.js?v=2.3" defer></script>
+<script src="js/features.js?v=2.3" defer></script>
+</body>
+</html>
+
+
