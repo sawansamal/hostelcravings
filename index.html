@@ -12,7 +12,7 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <link rel="stylesheet" href="css/styles.css?v=2.4" />
+  <link rel="stylesheet" href="css/styles.css?v=2.5" />
 </head>
 <body>
 
@@ -673,9 +673,13 @@
         <div class="product-info">
           <h3 class="product-name">Spicy Masala Chips</h3>
           <p class="product-desc">Bold, fiery, with the perfect crunch. The midnight classic.</p>
+          <div class="product-stock-tag stock-available">
+            <span class="stock-dot"></span>
+            <span><strong>20</strong> left in stock</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;49 <small>/ pack</small></div>
-            <button class="product-add-btn" aria-label="Add Spicy Masala Chips to cart" id="add-btn-1">
+            <button class="product-add-btn" aria-label="Add Spicy Masala Chips to cart" id="add-btn-1" data-stock="20">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -691,9 +695,13 @@
         <div class="product-info">
           <h3 class="product-name">Dark Chocolate Bar</h3>
           <p class="product-desc">Rich, velvety dark chocolate. Study fuel that actually tastes good.</p>
+          <div class="product-stock-tag stock-available">
+            <span class="stock-dot"></span>
+            <span><strong>15</strong> left in stock</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;89 <small>/ bar</small></div>
-            <button class="product-add-btn" aria-label="Add Dark Chocolate Bar to cart" id="add-btn-2">
+            <button class="product-add-btn" aria-label="Add Dark Chocolate Bar to cart" id="add-btn-2" data-stock="15">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -709,9 +717,13 @@
         <div class="product-info">
           <h3 class="product-name">Cold Brew Coffee</h3>
           <p class="product-desc">Smooth, strong cold brew. For the warriors who study till sunrise.</p>
+          <div class="product-stock-tag stock-low">
+            <span class="stock-dot"></span>
+            <span>Only <strong>4</strong> left in stock!</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;79 <small>/ bottle</small></div>
-            <button class="product-add-btn" aria-label="Add Cold Brew Coffee to cart" id="add-btn-3">
+            <button class="product-add-btn" aria-label="Add Cold Brew Coffee to cart" id="add-btn-3" data-stock="4">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -727,9 +739,13 @@
         <div class="product-info">
           <h3 class="product-name">Maggi Noodles Pack</h3>
           <p class="product-desc">The OG hostel staple. Ready in 2 minutes, gone even faster.</p>
+          <div class="product-stock-tag stock-available">
+            <span class="stock-dot"></span>
+            <span><strong>60</strong> left in stock</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;39 <small>/ pack</small></div>
-            <button class="product-add-btn" aria-label="Add Maggi Noodles to cart" id="add-btn-4">
+            <button class="product-add-btn" aria-label="Add Maggi Noodles to cart" id="add-btn-4" data-stock="60">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -745,9 +761,13 @@
         <div class="product-info">
           <h3 class="product-name">Caramel Waffer Biscuits</h3>
           <p class="product-desc">Buttery caramel waffer cookies. One bite and you are hooked.</p>
+          <div class="product-stock-tag stock-available">
+            <span class="stock-dot"></span>
+            <span><strong>18</strong> left in stock</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;69 <small>/ box</small></div>
-            <button class="product-add-btn" aria-label="Add Caramel Waffer Biscuits to cart" id="add-btn-5">
+            <button class="product-add-btn" aria-label="Add Caramel Waffer Biscuits to cart" id="add-btn-5" data-stock="18">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -763,9 +783,13 @@
         <div class="product-info">
           <h3 class="product-name">Cheese Popcorn Pack</h3>
           <p class="product-desc">Movie-level indulgence, hostel-room comfort. Dangerously addictive.</p>
+          <div class="product-stock-tag stock-low">
+            <span class="stock-dot"></span>
+            <span>Only <strong>5</strong> left in stock!</span>
+          </div>
           <div class="product-footer">
             <div class="product-price">&#8377;55 <small>/ bag</small></div>
-            <button class="product-add-btn" aria-label="Add Cheese Popcorn to cart" id="add-btn-6">
+            <button class="product-add-btn" aria-label="Add Cheese Popcorn to cart" id="add-btn-6" data-stock="5">
               <iconify-icon icon="ph:plus-bold" aria-hidden="true"></iconify-icon>
             </button>
           </div>
@@ -1002,8 +1026,8 @@
   <span class="whatsapp-float-ping"></span>
 </a>
 
-<script src="js/main.js?v=2.4" defer></script>
-<script src="js/features.js?v=2.4" defer></script>
+<script src="js/main.js?v=2.5" defer></script>
+<script src="js/features.js?v=2.5" defer></script>
 </body>
 </html>
 

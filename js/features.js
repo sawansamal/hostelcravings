@@ -111,8 +111,21 @@
       const price = parseFloat(priceText.replace(/[^\d.]/g, "")) || 49;
       const img = imgEl ? (imgEl.src || imgEl.getAttribute("data-src") || "") : "";
 
+      const maxStock = parseInt(btn.dataset.stock);
       const cart = getCart();
       const existing = cart.find(i => i.name === name);
+
+      if (!isNaN(maxStock)) {
+        if (maxStock <= 0) {
+          showToast(`Sorry, ${name} is out of stock!`, false);
+          return;
+        }
+        if (existing && existing.quantity >= maxStock) {
+          showToast(`Only ${maxStock} in stock for ${name}!`, false);
+          return;
+        }
+      }
+
       if (existing) {
         existing.quantity += 1;
       } else {
@@ -182,14 +195,15 @@
         };
 
         grid.innerHTML = products.map(p => {
-          const isOut = (p.in_stock === 0 || p.quantity === 0);
-          const isLow = (!isOut && p.quantity > 0 && p.quantity <= 5);
+          const qty = (p.quantity !== undefined && p.quantity !== null) ? Number(p.quantity) : (p.in_stock ? 20 : 0);
+          const isOut = (p.in_stock === 0 || qty === 0);
+          const isLow = (!isOut && qty > 0 && qty <= 5);
 
           let badgeHtml = '';
           if (isOut) {
             badgeHtml = '<span class="product-badge badge-out">Out of Stock</span>';
           } else if (isLow) {
-            badgeHtml = `<span class="product-badge badge-low">Only ${p.quantity} Left</span>`;
+            badgeHtml = `<span class="product-badge badge-low">Only ${qty} Left</span>`;
           } else if (p.category === 'instant') {
             badgeHtml = '<span class="product-badge badge-hot">Hostel Fav</span>';
           } else if (p.category === 'biscuits') {
@@ -198,6 +212,31 @@
             badgeHtml = '<span class="product-badge badge-best">Sweet Pick</span>';
           } else {
             badgeHtml = '<span class="product-badge badge-new">Popular</span>';
+          }
+
+          // Stock left indicator tag
+          let stockTagHtml = '';
+          if (isOut) {
+            stockTagHtml = `
+              <div class="product-stock-tag stock-out">
+                <span class="stock-dot"></span>
+                <span>Out of stock</span>
+              </div>
+            `;
+          } else if (isLow) {
+            stockTagHtml = `
+              <div class="product-stock-tag stock-low">
+                <span class="stock-dot"></span>
+                <span>Only <strong>${qty}</strong> left in stock!</span>
+              </div>
+            `;
+          } else {
+            stockTagHtml = `
+              <div class="product-stock-tag stock-available">
+                <span class="stock-dot"></span>
+                <span><strong>${qty}</strong> left in stock</span>
+              </div>
+            `;
           }
 
           const fallbackImg = defaultImgs[p.category] || defaultImgs.instant;
@@ -222,9 +261,10 @@
               <div class="product-info">
                 <h3 class="product-name">${cleanName}</h3>
                 <p class="product-desc">${desc}</p>
+                ${stockTagHtml}
                 <div class="product-footer">
                   <div class="product-price">&#8377;${p.price} <small>/ item</small></div>
-                  <button class="product-add-btn" aria-label="Add ${cleanName} to cart" id="add-btn-${p.id}"${btnDisabled}>
+                  <button class="product-add-btn" aria-label="Add ${cleanName} to cart" id="add-btn-${p.id}" data-stock="${qty}" data-product-id="${p.id}"${btnDisabled}>
                     <iconify-icon icon="${btnIcon}" aria-hidden="true"></iconify-icon>
                   </button>
                 </div>
