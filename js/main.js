@@ -135,6 +135,31 @@ tabBtns.forEach(btn => {
   });
 });
 
+/* ─── HERO SNACK BUBBLES -> REDIRECT TO MENU ───── */
+const snackBubbles = document.querySelectorAll(".snack-bubble");
+snackBubbles.forEach(bubble => {
+  bubble.addEventListener("click", (e) => {
+    e.preventDefault();
+    const filterTarget = bubble.dataset.filterTarget;
+    const productsEl = document.getElementById("products");
+
+    if (productsEl) {
+      // Smooth scroll to the menu section with offset for fixed header
+      const navHeight = document.querySelector(".navbar")?.offsetHeight || 80;
+      const targetPos = productsEl.getBoundingClientRect().top + window.pageYOffset - navHeight + 10;
+      window.scrollTo({ top: targetPos, behavior: "smooth" });
+    }
+
+    // Activate the corresponding category tab if matching
+    if (filterTarget) {
+      const matchingTab = document.querySelector(`.tab-btn[data-filter="${filterTarget}"]`);
+      if (matchingTab) {
+        matchingTab.click();
+      }
+    }
+  });
+});
+
 
 
 /* ─── TOAST NOTIFICATION ───────────────────── */

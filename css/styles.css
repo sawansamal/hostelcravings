@@ -424,8 +424,8 @@ h1, h2, h3, h4 {
   right: 5%;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
-  pointer-events: none;
+  z-index: 12;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -435,31 +435,52 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-gold);
   border-radius: 60px;
-  padding: 8px 16px 8px 8px;
+  padding: 8px 18px 8px 8px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 16px var(--gold-glow);
-  transition: var(--transition);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 16px var(--gold-glow);
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.snack-bubble:hover {
+  background: rgba(201, 168, 76, 0.2);
+  border-color: var(--gold-light);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 28px rgba(201, 168, 76, 0.35);
+  transform: translateX(-8px) scale(1.05);
+}
+.snack-bubble:active {
+  transform: translateX(-4px) scale(0.98);
 }
 .snack-bubble img {
   width: 52px;
   height: 52px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(201,168,76,0.4);
+  border: 2px solid rgba(201,168,76,0.5);
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.snack-bubble:hover img {
+  transform: scale(1.08) rotate(4deg);
 }
 .sb-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--gold-light);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.snack-bubble:hover .sb-label {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(232, 199, 110, 0.8);
 }
 .sb-1 { animation: bubble-float 4.0s ease-in-out infinite; }
 .sb-2 { animation: bubble-float 4.6s ease-in-out infinite 0.4s; }

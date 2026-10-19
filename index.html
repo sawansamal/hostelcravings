@@ -12,7 +12,7 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <link rel="stylesheet" href="css/styles.css?v=2.3" />
+  <link rel="stylesheet" href="css/styles.css?v=2.4" />
 </head>
 <body>
 
@@ -490,28 +490,28 @@
     </div>
   </a>
 
-  <!-- Floating snack bubbles on right side of hero -->
-  <div class="hero-snack-bubbles" aria-hidden="true">
-    <div class="snack-bubble sb-1">
-      <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
-      <div class="sb-label">Chips</div>
-    </div>
-    <div class="snack-bubble sb-2">
-      <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
-      <div class="sb-label">Maggi</div>
-    </div>
-    <div class="snack-bubble sb-3">
-      <img src="https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
-      <div class="sb-label">Chocolate</div>
-    </div>
-    <div class="snack-bubble sb-4">
-      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
-      <div class="sb-label">Waffers</div>
-    </div>
-    <div class="snack-bubble sb-5">
-      <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
-      <div class="sb-label">Biscuits</div>
-    </div>
+  <!-- Floating snack bubbles on right side of hero (interactive buttons to menu) -->
+  <div class="hero-snack-bubbles" role="region" aria-label="Quick snack menu shortcuts">
+    <a href="#products" class="snack-bubble sb-1" data-filter-target="chips" aria-label="View Chips in Menu">
+      <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=200&q=80&auto=format&fit=crop" alt="Chips" loading="lazy" />
+      <span class="sb-label">Chips</span>
+    </a>
+    <a href="#products" class="snack-bubble sb-2" data-filter-target="instant" aria-label="View Maggi in Menu">
+      <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200&q=80&auto=format&fit=crop" alt="Maggi" loading="lazy" />
+      <span class="sb-label">Maggi</span>
+    </a>
+    <a href="#products" class="snack-bubble sb-3" data-filter-target="sweet" aria-label="View Chocolate in Menu">
+      <img src="https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=200&q=80&auto=format&fit=crop" alt="Chocolate" loading="lazy" />
+      <span class="sb-label">Chocolate</span>
+    </a>
+    <a href="#products" class="snack-bubble sb-4" data-filter-target="biscuits" aria-label="View Waffers in Menu">
+      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80&auto=format&fit=crop" alt="Waffers" loading="lazy" />
+      <span class="sb-label">Waffers</span>
+    </a>
+    <a href="#products" class="snack-bubble sb-5" data-filter-target="biscuits" aria-label="View Biscuits in Menu">
+      <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80&auto=format&fit=crop" alt="Biscuits" loading="lazy" />
+      <span class="sb-label">Biscuits</span>
+    </a>
   </div>
   <div class="hero-particles" aria-hidden="true"></div>
   <div class="container">
@@ -1002,8 +1002,8 @@
   <span class="whatsapp-float-ping"></span>
 </a>
 
-<script src="js/main.js?v=2.3" defer></script>
-<script src="js/features.js?v=2.3" defer></script>
+<script src="js/main.js?v=2.4" defer></script>
+<script src="js/features.js?v=2.4" defer></script>
 </body>
 </html>
 
