@@ -484,7 +484,7 @@
         guest_phone: phone,
         room_no: room,
         hostel_no: room,
-        delivery_type: room.toLowerCase().includes("11") ? "door" : "gate",
+        delivery_type: room.toLowerCase().includes("12") ? "door" : "gate",
         payment_method: "cash",
         notes: notes
       };

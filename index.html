@@ -242,7 +242,7 @@
         <label for="reg-room">Room / Hostel</label>
         <div class="login-input-wrap">
           <iconify-icon icon="ph:door-bold"></iconify-icon>
-          <input type="text" id="reg-room" name="room" placeholder="e.g. BS11 Room 204" required />
+          <input type="text" id="reg-room" name="room" placeholder="e.g. BS 12 Room 204" required />
         </div>
       </div>
       <div class="login-field">
@@ -288,9 +288,10 @@
       <div class="pol-card">
         <h3 class="pol-card-title"><span class="pol-emoji">&#x1F6AA;</span> Delivery</h3>
         <ul class="pol-list">
-          <li>We deliver only inside the hostel premises, to the room number you provide.</li>
-          <li>Delivery usually happens within 15&ndash;45 minutes depending on availability.</li>
-          <li>If you're not in your room, we'll try calling the phone number you entered.</li>
+          <li><strong>Door delivery:</strong> BS 12 residents.</li>
+          <li><strong>Gate delivery:</strong> BS 11 &amp; BS 13 residents.</li>
+          <li>Delivery usually takes 10&ndash;15 minutes. Absolutely no delivery charges.</li>
+          <li>If you're not at the door or gate, we'll try calling the phone number you entered.</li>
         </ul>
       </div>
       <div class="pol-card">
@@ -427,6 +428,8 @@
   <div class="marquee-track">
     <div class="marquee-item"><iconify-icon icon="ph:star-four-bold"></iconify-icon> Maggi Noodles</div>
     <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:map-pin-fill"></iconify-icon> Delivering to BS 11, 12, 13</div>
+    <div class="marquee-dot"></div>
     <div class="marquee-item"><iconify-icon icon="ph:lightning-bold"></iconify-icon> Midnight Delivery</div>
     <div class="marquee-dot"></div>
     <div class="marquee-item"><iconify-icon icon="ph:cookie-bold"></iconify-icon> Biscuits &amp; Waffers</div>
@@ -436,6 +439,8 @@
     <div class="marquee-item"><iconify-icon icon="ph:medal-bold"></iconify-icon> Chips &amp; Crisps</div>
     <div class="marquee-dot"></div>
     <div class="marquee-item"><iconify-icon icon="ph:cake-bold"></iconify-icon> Cakes &amp; Treats</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item"><iconify-icon icon="ph:map-pin-fill"></iconify-icon> Delivering to BS 11, 12, 13</div>
     <div class="marquee-dot"></div>
     <div class="marquee-item"><iconify-icon icon="ph:star-four-bold"></iconify-icon> Maggi Noodles</div>
     <div class="marquee-dot"></div>
@@ -465,6 +470,25 @@
     <div class="hero-bg-overlay"></div>
   </div>
 
+  <!-- HOME PAGE CORNER BADGE: Available in BS 11, 12, 13 -->
+  <a href="#faq-1" class="hero-corner-badge" aria-label="Available in BS 11, 12, 13">
+    <div class="hcb-live-indicator">
+      <span class="hcb-dot"></span>
+      <span class="hcb-ping"></span>
+    </div>
+    <div class="hcb-content">
+      <div class="hcb-top-row">
+        <iconify-icon icon="ph:map-pin-fill" class="hcb-pin-icon" aria-hidden="true"></iconify-icon>
+        <span class="hcb-live-tag">Delivering Now</span>
+      </div>
+      <div class="hcb-title">Available in <span class="hcb-bold">BS 11, 12, 13</span></div>
+      <div class="hcb-subtext">
+        <span class="hcb-pill hcb-door">Door: <strong>BS 12</strong></span>
+        <span class="hcb-sep">•</span>
+        <span class="hcb-pill hcb-gate">Gate: <strong>BS 11 &amp; 13</strong></span>
+      </div>
+    </div>
+  </a>
 
   <!-- Floating snack bubbles on right side of hero -->
   <div class="hero-snack-bubbles" aria-hidden="true">
@@ -773,7 +797,7 @@
               <span>How fast is delivery to my hostel room?</span>
               <span class="faq-chevron" aria-hidden="true"><iconify-icon icon="ph:caret-down-bold"></iconify-icon></span>
             </div>
-            <div class="faq-answer"><div class="faq-answer-inner">We deliver within <strong>10 minutes</strong>! We also accept <strong>pre-orders</strong> so your snacks are ready exactly when you need them. <strong>Door delivery</strong> is available for <strong>BS11</strong> residents. <strong>Gate delivery</strong> for <strong>BS12 &amp; BS13</strong>. Absolutely <strong>no delivery charges</strong> — ever.</div></div>
+            <div class="faq-answer"><div class="faq-answer-inner">We deliver within <strong>10 minutes</strong>! We also accept <strong>pre-orders</strong> so your snacks are ready exactly when you need them. <strong>Door delivery</strong> is available for <strong>BS 12</strong> residents. <strong>Gate delivery</strong> for <strong>BS 11 &amp; BS 13</strong>. Absolutely <strong>no delivery charges</strong> — ever.</div></div>
 
           </div>
 
@@ -937,7 +961,7 @@
         <form id="checkout-form" novalidate class="cart-form">
           <input type="text" id="co-name" class="cart-input" placeholder="Your name" required />
           <input type="tel" id="co-phone" class="cart-input" placeholder="Phone number" required />
-          <input type="text" id="co-room" class="cart-input" placeholder="Room / block (e.g. B-214)" required />
+          <input type="text" id="co-room" class="cart-input" placeholder="Hostel &amp; Room (e.g. BS 12 Room 204)" required />
           <textarea id="co-notes" class="cart-input cart-textarea" placeholder="Notes (optional)" rows="3"></textarea>
 
           <div class="cart-error" id="checkout-error" aria-live="polite"></div>
