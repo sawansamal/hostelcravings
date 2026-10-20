@@ -687,6 +687,87 @@
       background: var(--gold-faint); border-color: var(--gold); color: var(--gold-light);
     }
 
+    /* ─── IMAGE UPLOAD & SOURCE SWITCHER ─── */
+    .image-mode-tabs {
+      display: flex; gap: 6px; background: rgba(255, 255, 255, 0.04);
+      padding: 4px; border-radius: var(--radius-pill); border: 1px solid var(--border);
+      margin-bottom: 12px; width: fit-content;
+    }
+    .img-mode-tab {
+      background: transparent; border: none; color: var(--text-muted);
+      padding: 6px 14px; border-radius: var(--radius-pill); font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: var(--transition); font-family: 'DM Sans', sans-serif;
+    }
+    .img-mode-tab:hover { color: var(--text); }
+    .img-mode-tab.active {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #0a0a0f; box-shadow: 0 2px 10px var(--gold-glow);
+    }
+
+    /* Dropzone */
+    .image-dropzone {
+      border: 2px dashed rgba(201, 168, 76, 0.35); border-radius: var(--radius-md);
+      background: rgba(201, 168, 76, 0.02); padding: 22px 18px; text-align: center;
+      cursor: pointer; transition: var(--transition); position: relative;
+    }
+    .image-dropzone:hover, .image-dropzone.dragover, .image-dropzone:focus-visible {
+      border-color: var(--gold); background: rgba(201, 168, 76, 0.08);
+      box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-1px); outline: none;
+    }
+    .dropzone-icon {
+      width: 44px; height: 44px; margin: 0 auto 10px; border-radius: 12px;
+      background: var(--gold-faint); border: 1px solid var(--border-focus);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold-light); font-size: 1.4rem; transition: var(--transition);
+    }
+    .image-dropzone:hover .dropzone-icon {
+      transform: scale(1.08); background: var(--gold); color: #0a0a0f;
+    }
+    .dropzone-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .dropzone-hint { font-size: 0.74rem; color: var(--text-muted); }
+
+    /* Live Preview Card */
+    .img-preview-card {
+      margin-top: 12px; background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-focus); border-radius: var(--radius-md);
+      padding: 10px 14px; display: flex; align-items: center; gap: 14px;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .preview-thumb-wrap {
+      width: 58px; height: 58px; border-radius: var(--radius-sm);
+      overflow: hidden; background: #000; border: 1px solid var(--border);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .preview-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .preview-details { flex: 1; min-width: 0; }
+    .preview-name {
+      font-size: 0.82rem; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
+    }
+    .preview-meta { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+    .preview-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-preview-action {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border);
+      color: var(--text); padding: 6px 10px; border-radius: var(--radius-sm);
+      font-size: 0.74rem; font-weight: 600; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 4px; transition: var(--transition); font-family: 'DM Sans', sans-serif;
+    }
+    .btn-preview-action:hover {
+      background: var(--gold-faint); border-color: var(--gold); color: var(--gold-light);
+    }
+    .btn-preview-action.remove:hover {
+      background: var(--red-faint); border-color: var(--red); color: var(--red);
+    }
+    .spin-icon {
+      animation: spin 1s linear infinite; display: inline-block;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
     /* Toast */
     #toast-notice {
       position: fixed; bottom: 28px; right: 28px; z-index: 99999;
@@ -1100,15 +1181,62 @@
       </div>
 
       <div class="form-group">
-        <label for="pm-img">Image URL</label>
-        <input type="url" id="pm-img" class="modal-input" placeholder="https://images.unsplash.com/..." />
-        <div class="preset-chips">
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80')">🌶️ Chips</span>
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80')">🍫 Chocolate</span>
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80')">🍜 Maggi</span>
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80')">☕ Cold Brew</span>
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80')">🧇 Waffer</span>
-          <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80')">🍿 Popcorn</span>
+        <label>Snack Image</label>
+        
+        <!-- Toggle Tabs: Upload Own Image vs Image Address URL -->
+        <div class="image-mode-tabs" role="tablist">
+          <button type="button" class="img-mode-tab active" id="tab-mode-upload">
+            <iconify-icon icon="ph:cloud-arrow-up-bold"></iconify-icon> Upload Image
+          </button>
+          <button type="button" class="img-mode-tab" id="tab-mode-url">
+            <iconify-icon icon="ph:link-bold"></iconify-icon> Image Address / URL
+          </button>
+        </div>
+
+        <!-- Mode 1: Insert / Upload Own Image from Device -->
+        <div id="panel-mode-upload" class="image-mode-panel">
+          <div class="image-dropzone" id="img-dropzone" tabindex="0" role="button" aria-label="Upload image from device">
+            <input type="file" id="pm-file-input" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif" style="display:none;" />
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <iconify-icon icon="ph:image-square-bold"></iconify-icon>
+              </div>
+              <p class="dropzone-title">Click to choose image or drag &amp; drop</p>
+              <p class="dropzone-hint">Upload your own snack photo from computer or phone</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode 2: Online Image Address / URL -->
+        <div id="panel-mode-url" class="image-mode-panel" style="display:none;">
+          <input type="url" id="pm-img" class="modal-input" placeholder="https://images.unsplash.com/..." />
+          <div class="preset-chips">
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80')">🌶️ Chips</span>
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80')">🍫 Chocolate</span>
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80')">🍜 Maggi</span>
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80')">☕ Cold Brew</span>
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80')">🧇 Waffer</span>
+            <span class="preset-chip" onclick="setPresetImg('https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80')">🍿 Popcorn</span>
+          </div>
+        </div>
+
+        <!-- Live Image Preview Card -->
+        <div id="img-preview-box" class="img-preview-card" style="display:none;">
+          <div class="preview-thumb-wrap">
+            <img id="img-preview-thumb" src="" alt="Selected Snack Preview" />
+          </div>
+          <div class="preview-details">
+            <div class="preview-name" id="preview-file-name">Image selected</div>
+            <div class="preview-meta" id="preview-file-size">Ready to save</div>
+          </div>
+          <div class="preview-actions">
+            <button type="button" class="btn-preview-action" id="btn-change-img" title="Change Image">
+              <iconify-icon icon="ph:arrows-clockwise-bold"></iconify-icon> Change
+            </button>
+            <button type="button" class="btn-preview-action remove" id="btn-remove-img" title="Remove Image">
+              <iconify-icon icon="ph:trash-bold"></iconify-icon>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1692,6 +1820,188 @@
   const quickAddBtnTop = document.getElementById('btn-quick-add-prod');
   const closeProdModalBtn = document.getElementById('btn-close-prod-modal');
 
+  // Image upload UI elements
+  const tabModeUpload = document.getElementById('tab-mode-upload');
+  const tabModeUrl = document.getElementById('tab-mode-url');
+  const panelModeUpload = document.getElementById('panel-mode-upload');
+  const panelModeUrl = document.getElementById('panel-mode-url');
+  const imgDropzone = document.getElementById('img-dropzone');
+  const pmFileInput = document.getElementById('pm-file-input');
+  const imgPreviewBox = document.getElementById('img-preview-box');
+  const imgPreviewThumb = document.getElementById('img-preview-thumb');
+  const previewFileName = document.getElementById('preview-file-name');
+  const previewFileSize = document.getElementById('preview-file-size');
+  const btnChangeImg = document.getElementById('btn-change-img');
+  const btnRemoveImg = document.getElementById('btn-remove-img');
+  const pmImgInput = document.getElementById('pm-img');
+
+  function setImageMode(mode) {
+    if (mode === 'upload') {
+      if (tabModeUpload) tabModeUpload.classList.add('active');
+      if (tabModeUrl) tabModeUrl.classList.remove('active');
+      if (panelModeUpload) panelModeUpload.style.display = 'block';
+      if (panelModeUrl) panelModeUrl.style.display = 'none';
+    } else {
+      if (tabModeUrl) tabModeUrl.classList.add('active');
+      if (tabModeUpload) tabModeUpload.classList.remove('active');
+      if (panelModeUrl) panelModeUrl.style.display = 'block';
+      if (panelModeUpload) panelModeUpload.style.display = 'none';
+    }
+  }
+
+  if (tabModeUpload) tabModeUpload.addEventListener('click', () => setImageMode('upload'));
+  if (tabModeUrl) tabModeUrl.addEventListener('click', () => setImageMode('url'));
+
+  function showImagePreview(url, name = 'Image selected', meta = 'Ready to save') {
+    if (!url) {
+      if (imgPreviewBox) imgPreviewBox.style.display = 'none';
+      return;
+    }
+    if (imgPreviewThumb) imgPreviewThumb.src = url;
+    if (previewFileName) previewFileName.textContent = name;
+    if (previewFileSize) previewFileSize.innerHTML = meta;
+    if (imgPreviewBox) imgPreviewBox.style.display = 'flex';
+  }
+
+  function clearImagePreview() {
+    if (pmImgInput) pmImgInput.value = '';
+    if (pmFileInput) pmFileInput.value = '';
+    if (imgPreviewThumb) imgPreviewThumb.src = '';
+    if (imgPreviewBox) imgPreviewBox.style.display = 'none';
+  }
+
+  function compressImage(dataUrl, maxDim, quality, cb) {
+    const img = new Image();
+    img.onload = function() {
+      let w = img.width;
+      let h = img.height;
+      if (w > maxDim || h > maxDim) {
+        if (w > h) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const mime = dataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+      cb(canvas.toDataURL(mime, quality));
+    };
+    img.onerror = function() {
+      cb(dataUrl);
+    };
+    img.src = dataUrl;
+  }
+
+  async function uploadImageToServer(base64Data, filename) {
+    if (previewFileSize) {
+      previewFileSize.innerHTML = '<span style="color:var(--gold)"><iconify-icon icon="ph:spinner-gap-bold" class="spin-icon"></iconify-icon> Uploading to store...</span>';
+    }
+    try {
+      const res = await fetch(`${API}/admin/upload-image`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ image: base64Data, filename })
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        if (pmImgInput) pmImgInput.value = data.url;
+        if (previewFileSize) previewFileSize.innerHTML = '<span style="color:var(--green)">✓ Uploaded to store</span>';
+      } else {
+        if (pmImgInput) pmImgInput.value = base64Data;
+        if (previewFileSize) previewFileSize.innerHTML = '<span style="color:var(--text-muted)">Ready to save</span>';
+      }
+    } catch (err) {
+      if (pmImgInput) pmImgInput.value = base64Data;
+      if (previewFileSize) previewFileSize.innerHTML = '<span style="color:var(--text-muted)">Ready to save</span>';
+    }
+  }
+
+  function handleSelectedFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (PNG, JPG, WebP)', false);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const raw = e.target.result;
+      showImagePreview(raw, file.name, 'Processing image...');
+      compressImage(raw, 1200, 0.85, function(compressed) {
+        showImagePreview(compressed, file.name, 'Uploading to store...');
+        uploadImageToServer(compressed, file.name);
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (imgDropzone) {
+    imgDropzone.addEventListener('click', () => pmFileInput && pmFileInput.click());
+    imgDropzone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        pmFileInput && pmFileInput.click();
+      }
+    });
+    ['dragenter', 'dragover'].forEach(ev => {
+      imgDropzone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        imgDropzone.classList.add('dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(ev => {
+      imgDropzone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        imgDropzone.classList.remove('dragover');
+      });
+    });
+    imgDropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleSelectedFile(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
+  if (pmFileInput) {
+    pmFileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleSelectedFile(e.target.files[0]);
+      }
+    });
+  }
+
+  if (btnChangeImg) {
+    btnChangeImg.addEventListener('click', (e) => {
+      e.preventDefault();
+      pmFileInput && pmFileInput.click();
+    });
+  }
+
+  if (btnRemoveImg) {
+    btnRemoveImg.addEventListener('click', (e) => {
+      e.preventDefault();
+      clearImagePreview();
+    });
+  }
+
+  if (pmImgInput) {
+    pmImgInput.addEventListener('input', () => {
+      const v = pmImgInput.value.trim();
+      if (v) {
+        showImagePreview(v, 'Image Address', 'External Web Link');
+      } else {
+        clearImagePreview();
+      }
+    });
+  }
+
   function openProductModal(product = null) {
     document.getElementById('pm-error').textContent = '';
     if (product) {
@@ -1705,6 +2015,13 @@
       document.getElementById('pm-img').value = product.image_url || '';
       document.getElementById('pm-desc').value = product.description || '';
       document.getElementById('btn-save-prod').innerHTML = '<iconify-icon icon="ph:check-bold"></iconify-icon> Save Changes';
+
+      if (product.image_url) {
+        showImagePreview(product.image_url, product.name || 'Current Snack Image', '<span style="color:var(--gold-light)">Current photo</span>');
+      } else {
+        clearImagePreview();
+      }
+      setImageMode('upload');
     } else {
       document.getElementById('prod-modal-title').textContent = 'Add New Snack';
       document.getElementById('pm-id').value = '';
@@ -1712,6 +2029,8 @@
       document.getElementById('pm-qty').value = '25';
       document.getElementById('pm-stock').value = '1';
       document.getElementById('btn-save-prod').innerHTML = '<iconify-icon icon="ph:plus-bold"></iconify-icon> Add to Store';
+      clearImagePreview();
+      setImageMode('upload');
     }
     prodModal.classList.add('open');
   }
@@ -1736,7 +2055,10 @@
 
   window.setPresetImg = function(url) {
     const inp = document.getElementById('pm-img');
-    if (inp) inp.value = url;
+    if (inp) {
+      inp.value = url;
+      showImagePreview(url, 'Preset Image', '<span style="color:var(--gold-light)">Preset selected</span>');
+    }
   };
 
   if (prodForm) {

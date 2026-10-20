@@ -1,5 +1,7 @@
 const express = require('express');
 const jwt     = require('jsonwebtoken');
+const path    = require('path');
+const fs      = require('fs');
 const db      = require('../db');
 const router  = express.Router();
 const SECRET  = process.env.JWT_SECRET || 'hc_secret_lpu_2024';
@@ -74,6 +76,47 @@ router.get('/customers', adminOnly, (req, res) => {
     ORDER BY u.created_at DESC
   `).all();
   res.json(customers);
+});
+
+/* ── Upload image from device ──────────────── */
+router.post('/upload-image', adminOnly, (req, res) => {
+  const { image, filename } = req.body;
+  if (!image) {
+    return res.status(400).json({ error: 'No image data provided.' });
+  }
+
+  try {
+    let ext = 'jpg';
+    let base64Data = image;
+
+    // Support data URI: "data:image/png;base64,iVBORw..." or raw base64
+    const match = image.match(/^data:image\/([a-zA-Z0-9+]+);base64,(.+)$/);
+    if (match) {
+      ext = match[1] === 'jpeg' ? 'jpg' : match[1].replace('+xml', '');
+      if (ext === 'svg+xml') ext = 'svg';
+      base64Data = match[2];
+    } else if (filename && filename.includes('.')) {
+      ext = filename.split('.').pop().toLowerCase();
+    }
+
+    const allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'];
+    const cleanExt = allowed.includes(ext.toLowerCase()) ? ext.toLowerCase() : 'jpg';
+
+    // Unique safe filename
+    const safeName = `snack_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${cleanExt}`;
+    const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+
+    const filePath = path.join(uploadsDir, safeName);
+    fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+
+    res.json({ success: true, url: `/uploads/${safeName}`, filename: safeName });
+  } catch (err) {
+    console.error('Upload image error:', err);
+    res.status(500).json({ error: 'Failed to save image on server.' });
+  }
 });
 
 /* ── Products CRUD ─────────────────────────── */
