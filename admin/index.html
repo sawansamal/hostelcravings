@@ -766,7 +766,26 @@
     .spin-icon {
       animation: spin 1s linear infinite; display: inline-block;
     }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
+    /* Backup Alert Banner */
+    .backup-alert-banner {
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.16), rgba(201, 168, 76, 0.05));
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      margin: 14px 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeIn 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .banner-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     /* Toast */
     #toast-notice {
@@ -1036,11 +1055,35 @@
             <iconify-icon icon="ph:cookie-bold" style="color:var(--gold)"></iconify-icon>
             Snack Inventory &amp; Stock Levels
           </div>
-          <div style="display:flex;gap:10px;align-items:center">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <input type="text" id="prod-search" placeholder="Search snack..." style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;padding:8px 16px;color:#fff;font-size:.85rem;outline:none" />
+            <button type="button" class="btn-action" id="btn-backup-inv" title="Export inventory as JSON file" style="padding:8px 14px;font-size:.85rem">
+              <iconify-icon icon="ph:download-simple-bold"></iconify-icon> Backup
+            </button>
+            <button type="button" class="btn-action" id="btn-restore-inv" title="Restore inventory from JSON file" style="padding:8px 14px;font-size:.85rem">
+              <iconify-icon icon="ph:upload-simple-bold"></iconify-icon> Restore
+            </button>
+            <input type="file" id="inventory-file-input" accept=".json" style="display:none;" />
             <button type="button" class="btn-action btn-primary-gold" id="btn-open-add-modal">
               <iconify-icon icon="ph:plus-bold"></iconify-icon> Add New Snack
             </button>
+          </div>
+        </div>
+
+        <!-- Smart Backup Recovery Banner -->
+        <div id="backup-restore-banner" class="backup-alert-banner" style="display:none;">
+          <div class="banner-text">
+            <iconify-icon icon="ph:clock-counter-clockwise-bold" style="color:var(--gold);font-size:1.5rem"></iconify-icon>
+            <div>
+              <div style="font-weight:700;color:var(--gold-light);font-size:.92rem">Local Inventory Backup Available</div>
+              <div style="font-size:0.8rem;color:var(--text-muted)">Found <strong id="backup-item-count" style="color:var(--text)">0</strong> saved snacks in your browser backup. Restore them to the live store?</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button type="button" class="btn-action btn-primary-gold" id="btn-banner-restore" style="padding:7px 16px;font-size:0.82rem">
+              <iconify-icon icon="ph:arrow-counter-clockwise-bold"></iconify-icon> Restore All Snacks
+            </button>
+            <button type="button" class="btn-action" id="btn-banner-dismiss" style="padding:7px 12px;font-size:0.82rem">Dismiss</button>
           </div>
         </div>
 
@@ -1683,11 +1726,130 @@
   async function loadProducts() {
     try {
       const res = await fetch(`${API}/admin/products`, { headers: { Authorization: `Bearer ${token}` } });
-      if (!res.ok) return;
+      if (!res.ok) {
+        if (res.status === 401) {
+          showToast('Session expired. Please log in again.', false);
+          logout();
+        }
+        return;
+      }
       productsData = await res.json();
       document.getElementById('stat-products').textContent = productsData.filter(p => p.in_stock).length;
       renderProductsTable();
+      checkInventoryBackup(productsData);
+    } catch(e) {
+      console.error('Error loading products:', e);
+    }
+  }
+
+  function checkInventoryBackup(serverProducts) {
+    try {
+      const cachedRaw = localStorage.getItem('hc_inventory_cache');
+      if (cachedRaw) {
+        const cached = JSON.parse(cachedRaw);
+        if (Array.isArray(cached) && cached.length > serverProducts.length) {
+          const banner = document.getElementById('backup-restore-banner');
+          const countEl = document.getElementById('backup-item-count');
+          if (banner && countEl) {
+            countEl.textContent = cached.length;
+            banner.style.display = 'flex';
+          }
+          return;
+        }
+      }
+      if (serverProducts && serverProducts.length > 0) {
+        localStorage.setItem('hc_inventory_cache', JSON.stringify(serverProducts));
+        const banner = document.getElementById('backup-restore-banner');
+        if (banner) banner.style.display = 'none';
+      }
     } catch(e) {}
+  }
+
+  async function restoreFromCachedBackup(itemsToRestore) {
+    if (!itemsToRestore || !itemsToRestore.length) return;
+    showToast(`Restoring ${itemsToRestore.length} snacks to live store...`, true);
+    try {
+      const res = await fetch(`${API}/admin/products/bulk`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ products: itemsToRestore })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showToast(`Success! Restored all snacks (Total: ${data.total}).`, true);
+        const banner = document.getElementById('backup-restore-banner');
+        if (banner) banner.style.display = 'none';
+        await loadProducts();
+      } else {
+        showToast(data.error || 'Failed to restore snacks.', false);
+      }
+    } catch(err) {
+      showToast('Network error while restoring backup.', false);
+    }
+  }
+
+  function exportInventoryToFile() {
+    if (!productsData || !productsData.length) {
+      showToast('No products to backup.', false);
+      return;
+    }
+    const cleanData = productsData.map(({ id, created_at, ...rest }) => rest);
+    const blob = new Blob([JSON.stringify(cleanData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `hostelcravings_inventory_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Inventory backup file downloaded!', true);
+  }
+
+  function importInventoryFromFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      try {
+        const items = JSON.parse(e.target.result);
+        if (!Array.isArray(items)) throw new Error('File does not contain a list of products.');
+        await restoreFromCachedBackup(items);
+      } catch(err) {
+        showToast('Invalid backup file format.', false);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  const btnBackupInv = document.getElementById('btn-backup-inv');
+  const btnRestoreInv = document.getElementById('btn-restore-inv');
+  const invFileInput = document.getElementById('inventory-file-input');
+  const btnBannerRestore = document.getElementById('btn-banner-restore');
+  const btnBannerDismiss = document.getElementById('btn-banner-dismiss');
+
+  if (btnBackupInv) btnBackupInv.addEventListener('click', exportInventoryToFile);
+  if (btnRestoreInv) btnRestoreInv.addEventListener('click', () => invFileInput && invFileInput.click());
+  if (invFileInput) {
+    invFileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        importInventoryFromFile(e.target.files[0]);
+        e.target.value = '';
+      }
+    });
+  }
+  if (btnBannerRestore) {
+    btnBannerRestore.addEventListener('click', () => {
+      try {
+        const cached = JSON.parse(localStorage.getItem('hc_inventory_cache') || '[]');
+        restoreFromCachedBackup(cached);
+      } catch(e) {}
+    });
+  }
+  if (btnBannerDismiss) {
+    btnBannerDismiss.addEventListener('click', () => {
+      const banner = document.getElementById('backup-restore-banner');
+      if (banner) banner.style.display = 'none';
+    });
   }
 
   function renderProductsTable() {
