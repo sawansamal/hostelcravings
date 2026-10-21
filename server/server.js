@@ -37,12 +37,10 @@ app.get('{*splat}', (req, res) => {
 
 // ── Start ────────────────────────────────────
 const PORT = process.env.PORT || 3000;
-if (!process.env.VERCEL) {
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`\n🍪  Hostel Cravings server running at port ${PORT}`);
-    console.log(`📊  Admin panel: /admin`);
-    console.log(`🔑  Admin login: admin@hostelcravings.in / kulfimodda69\n`);
-  });
-}
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n🍪  Hostel Cravings server running at port ${PORT}`);
+  console.log(`📊  Admin panel: /admin`);
+  console.log(`🔑  Admin login: admin@hostelcravings.in / kulfimodda69\n`);
+});
 
 module.exports = app;

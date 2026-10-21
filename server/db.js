@@ -2,35 +2,16 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const isVercel = Boolean(process.env.VERCEL);
-let dbPath;
-
-if (isVercel) {
-  const tmpDir = '/tmp';
-  dbPath = path.join(tmpDir, 'hostelcravings.db');
-  const repoDb = path.join(__dirname, '..', 'data', 'hostelcravings.db');
-  if (!fs.existsSync(dbPath) && fs.existsSync(repoDb)) {
-    try {
-      fs.copyFileSync(repoDb, dbPath);
-    } catch (e) {
-      console.warn('Could not copy seed DB to /tmp:', e);
-    }
-  }
-} else {
-  const dataDir = path.join(__dirname, '..', 'data');
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-  dbPath = path.join(dataDir, 'hostelcravings.db');
+const dataDir = path.join(__dirname, '..', 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const db = new Database(dbPath);
+const db = new Database(path.join(dataDir, 'hostelcravings.db'));
 
-// Enable WAL mode for better performance on persistent disks
-if (!isVercel) {
-  try { db.pragma('journal_mode = WAL'); } catch (e) {}
-}
-try { db.pragma('foreign_keys = ON'); } catch (e) {}
+// Enable WAL mode for better performance
+db.pragma('journal_mode = WAL');
+db.pragma('foreign_keys = ON');
 
 // ── Create tables ────────────────────────────
 db.exec(`
@@ -96,26 +77,43 @@ if (!adminExists) {
   console.log('✅ Admin seeded: email=admin@hostelcravings.in  password=kulfimodda69');
 }
 
-// ── Seed products ────────────────────────────
-const productCount = db.prepare("SELECT COUNT(*) as c FROM products").get().c;
-if (productCount === 0) {
-  const insertProduct = db.prepare(`
-    INSERT INTO products (name, category, price, quantity, in_stock, description, image_url)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `);
-  const products = [
-    ['Ready to eat maggi',          'instant',  30, 50, 1, 'Delicious hostel snack', 'https://www.jamoona.com/cdn/shop/files/Maggi-70g-2Minuten-Nudeln-Masala-Fertiggericht-20387.png?v=1753198567'],
-    ['nimbu premix drink(2 pieces)', 'drinks',  15, 13, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80'],
-    ['kurkure orange',              'chips',    25,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
-    ['orange kurkure',              'chips',    15,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
-    ['kurkure (lime)',              'chips',    25,  2, 0, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80'],
-    ['Tedhe Medhe',                 'chips',    25,  2, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
-    ['oreo chocolate 30rs pack',    'chips',    30,  7, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80'],
-    ['Oreo (white) big',            'biscuits', 25, 10, 1, 'Delicious hostel snack', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5QrxtF-MdLOk59bjryj5-UVDj86684Dd4MBqrp8wHQ&s=10'],
-    ['Bourbon',                     'biscuits', 30,  5, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80'],
-  ];
-  products.forEach(p => insertProduct.run(...p));
-  console.log('✅ Products seeded with real store inventory');
-}
+// ── Seed products (Ensuring all 17 items exist) ──
+const insertProduct = db.prepare(`
+  INSERT INTO products (name, category, price, quantity, in_stock, description, image_url)
+  VALUES (?, ?, ?, ?, ?, ?, ?)
+`);
+const findProduct = db.prepare('SELECT id FROM products WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))');
+
+const defaultProducts = [
+  ['Ready to eat maggi',          'instant',  30, 50, 1, 'Delicious hostel snack', 'https://www.jamoona.com/cdn/shop/files/Maggi-70g-2Minuten-Nudeln-Masala-Fertiggericht-20387.png?v=1753198567'],
+  ['nimbu premix drink(2 pieces)', 'drinks',  15, 13, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80'],
+  ['kurkure orange',              'chips',    25,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+  ['orange kurkure',              'chips',    15,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+  ['kurkure (lime)',              'chips',    25,  2, 0, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80'],
+  ['Tedhe Medhe',                 'chips',    25,  2, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+  ['oreo chocolate 30rs pack',    'chips',    30,  7, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80'],
+  ['Oreo (white) big',            'biscuits', 25, 10, 1, 'Delicious hostel snack', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5QrxtF-MdLOk59bjryj5-UVDj86684Dd4MBqrp8wHQ&s=10'],
+  ['Bourbon',                     'biscuits', 30,  5, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80'],
+  ['Mega pack maggi',             'instant',  85,  7, 1, 'Delicious hostel snack', 'https://www.bbassets.com/media/uploads/p/l/266162_28-maggi-2-minute-instant-noodles-masala.jpg'],
+  ['lotte choco pie',             'biscuits', 15, 18, 1, 'Delicious hostel snack', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6edQPgF32yuDTycBjm8aHUdwI_KqW6_TSVkvBGavURQ&s=10'],
+  ['Oreo',                        'biscuits', 15, 12, 1, 'Delicious hostel snack', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5QrxtF-MdLOk59bjryj5-UVDj86684Dd4MBqrp8wHQ&s=10'],
+  ['maggi',                       'instant',  15, 60, 1, 'Delicious hostel snack', 'https://www.jamoona.com/cdn/shop/files/Maggi-70g-2Minuten-Nudeln-Masala-Fertiggericht-20387.png?v=1753198567'],
+  ["Lay's Magic Masala",          'chips',    20, 15, 1, 'Classic spicy blue Lay\'s chips', 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80'],
+  ['Cadbury Dairy Milk',          'sweet',    20, 20, 1, 'Classic smooth milk chocolate', 'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80'],
+  ['Nestle KitKat',               'sweet',    20, 15, 1, 'Crispy wafer fingers covered with milk chocolate', 'https://images.unsplash.com/photo-1582293041079-7814c2f12063?w=400&q=80'],
+  ['Bingo Mad Angles',            'chips',    20, 15, 1, 'Crispy triangular chips with tangy achari flavor', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80']
+];
+
+defaultProducts.forEach(p => {
+  const existing = findProduct.get(p[0]);
+  if (!existing) {
+    insertProduct.run(...p);
+  }
+});
+
+// Checkpoint WAL into disk so git can commit full data
+try {
+  db.pragma('wal_checkpoint(TRUNCATE)');
+} catch(e) {}
 
 module.exports = db;
