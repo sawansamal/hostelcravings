@@ -72,7 +72,7 @@ if (!adminExists) {
   const hash = bcrypt.hashSync('kulfimodda69', 10);
   db.prepare(`
     INSERT INTO users (name, email, phone, password, role)
-    VALUES ('Admin', 'admin@hostelcravings.in', '8143995997', ?, 'admin')
+    VALUES ('Admin', 'admin@hostelcravings.in', '7095143825', ?, 'admin')
   `).run(hash);
   console.log('✅ Admin seeded: email=admin@hostelcravings.in  password=kulfimodda69');
 }
