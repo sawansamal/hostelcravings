@@ -81,19 +81,22 @@ if (!adminExists) {
 const productCount = db.prepare("SELECT COUNT(*) as c FROM products").get().c;
 if (productCount === 0) {
   const insertProduct = db.prepare(`
-    INSERT INTO products (name, category, price, description, image_url)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO products (name, category, price, quantity, in_stock, description, image_url)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `);
   const products = [
-    ['Spicy Masala Chips',     'chips',   49,  'Bold, fiery, with the perfect crunch.',             'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
-    ['Dark Chocolate Bar',      'sweet',   89,  'Rich, velvety dark chocolate.',                     'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80'],
-    ['Cold Brew Coffee',        'drinks',  79,  'Smooth, strong cold brew.',                         'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80'],
-    ['Maggi Noodles Pack',      'instant', 39,  'The OG hostel staple. Ready in 2 minutes.',         'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80'],
-    ['Caramel Waffer Biscuits', 'sweet',   69,  'Buttery caramel waffer cookies.',                   'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80'],
-    ['Cheese Popcorn Pack',     'chips',   55,  'Movie-level indulgence, hostel-room comfort.',      'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80'],
+    ['Ready to eat maggi',          'instant',  30, 50, 1, 'Delicious hostel snack', 'https://www.jamoona.com/cdn/shop/files/Maggi-70g-2Minuten-Nudeln-Masala-Fertiggericht-20387.png?v=1753198567'],
+    ['nimbu premix drink(2 pieces)', 'drinks',  15, 13, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80'],
+    ['kurkure orange',              'chips',    25,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+    ['orange kurkure',              'chips',    15,  1, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+    ['kurkure (lime)',              'chips',    25,  2, 0, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80'],
+    ['Tedhe Medhe',                 'chips',    25,  2, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400&q=80'],
+    ['oreo chocolate 30rs pack',    'chips',    30,  7, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80'],
+    ['Oreo (white) big',            'biscuits', 25, 10, 1, 'Delicious hostel snack', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5QrxtF-MdLOk59bjryj5-UVDj86684Dd4MBqrp8wHQ&s=10'],
+    ['Bourbon',                     'biscuits', 30,  5, 1, 'Delicious hostel snack', 'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&q=80'],
   ];
   products.forEach(p => insertProduct.run(...p));
-  console.log('✅ Products seeded');
+  console.log('✅ Products seeded with real store inventory');
 }
 
 module.exports = db;
