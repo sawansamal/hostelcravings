@@ -88,14 +88,19 @@ db.exec(`
 
 // ── Seed admin user ──────────────────────────
 const bcrypt = require('bcryptjs');
+const adminPassword = process.env.ADMIN_PASSWORD || 'kulfimodda69';
+const adminEmail = process.env.ADMIN_EMAIL || 'admin@hostelcravings.in';
 const adminExists = db.prepare("SELECT id FROM users WHERE role='admin'").get();
 if (!adminExists) {
-  const hash = bcrypt.hashSync('kulfimodda69', 10);
+  const hash = bcrypt.hashSync(adminPassword, 10);
   db.prepare(`
     INSERT INTO users (name, email, phone, password, role)
-    VALUES ('Admin', 'admin@hostelcravings.in', '7095143825', ?, 'admin')
-  `).run(hash);
-  console.log('✅ Admin seeded: email=admin@hostelcravings.in  password=kulfimodda69');
+    VALUES ('Admin', ?, '7095143825', ?, 'admin')
+  `).run(adminEmail, hash);
+  console.log('✅ Admin account seeded');
+} else if (process.env.ADMIN_PASSWORD) {
+  const hash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
+  db.prepare("UPDATE users SET password = ?, email = ? WHERE role='admin'").run(hash, adminEmail);
 }
 
 // ── Seed products (Ensuring all 17 items exist) ──

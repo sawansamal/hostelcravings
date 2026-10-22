@@ -44,4 +44,4 @@ Render will build and deploy your app in about 1–2 minutes. You will receive a
 
 - **Customer Storefront:** `https://hostelcravings.onrender.com/`
 - **Owner Hub:** `https://hostelcravings.onrender.com/admin`
-- **Owner Credentials:** `admin@hostelcravings.in` / `kulfimodda69`
+- **Owner Access:** Use your private administrator credentials.

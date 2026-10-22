@@ -141,16 +141,7 @@
       box-shadow: 0 8px 28px var(--gold-glow);
     }
 
-    .btn-demo-creds {
-      background: none; border: 1px dashed var(--border);
-      color: var(--gold-light); font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
-      padding: 8px 14px; border-radius: var(--radius-pill);
-      cursor: pointer; margin-top: 16px; transition: var(--transition);
-    }
 
-    .btn-demo-creds:hover {
-      background: var(--gold-faint); border-color: var(--gold);
-    }
 
     .login-error {
       color: var(--red); font-size: 0.82rem; margin-top: 12px; min-height: 18px;
@@ -840,7 +831,7 @@
         <label for="adm-email">Owner Email</label>
         <div class="input-wrap">
           <iconify-icon icon="ph:user-bold"></iconify-icon>
-          <input type="email" id="adm-email" placeholder="admin@hostelcravings.in" value="admin@hostelcravings.in" required />
+          <input type="email" id="adm-email" placeholder="owner@hostelcravings.in" autocomplete="username" required />
         </div>
       </div>
 
@@ -848,7 +839,7 @@
         <label for="adm-pass">Password</label>
         <div class="input-wrap">
           <iconify-icon icon="ph:lock-bold"></iconify-icon>
-          <input type="password" id="adm-pass" placeholder="••••••••" value="kulfimodda69" required />
+          <input type="password" id="adm-pass" placeholder="••••••••" autocomplete="current-password" required />
         </div>
       </div>
 
@@ -857,10 +848,6 @@
       <button type="submit" class="btn-login" id="adm-login-btn">
         <iconify-icon icon="ph:sign-in-bold"></iconify-icon>
         Log into Store Hub
-      </button>
-
-      <button type="button" class="btn-demo-creds" id="btn-fill-creds">
-        ⚡ Demo Credentials: admin@hostelcravings.in / kulfimodda69
       </button>
     </form>
   </div>
@@ -1364,15 +1351,7 @@
   const loginForm = document.getElementById('owner-login-form');
   const loginScreen = document.getElementById('login-screen');
   const appContainer = document.getElementById('app');
-  const fillCredsBtn = document.getElementById('btn-fill-creds');
 
-  if (fillCredsBtn) {
-    fillCredsBtn.addEventListener('click', () => {
-      document.getElementById('adm-email').value = 'admin@hostelcravings.in';
-      document.getElementById('adm-pass').value = 'kulfimodda69';
-      showToast('Credentials filled! Click Log into Store Hub');
-    });
-  }
 
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
