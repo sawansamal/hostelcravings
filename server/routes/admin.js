@@ -105,17 +105,21 @@ router.post('/upload-image', adminOnly, (req, res) => {
     // Unique safe filename
     const safeName = `snack_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${cleanExt}`;
     const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    try {
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const filePath = path.join(uploadsDir, safeName);
+      fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+      res.json({ success: true, url: `/uploads/${safeName}`, filename: safeName });
+    } catch (writeErr) {
+      // If running on a read-only serverless filesystem like Vercel, serve data URI directly
+      const dataUri = image.startsWith('data:') ? image : `data:image/${cleanExt};base64,${base64Data}`;
+      res.json({ success: true, url: dataUri, filename: safeName });
     }
-
-    const filePath = path.join(uploadsDir, safeName);
-    fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
-
-    res.json({ success: true, url: `/uploads/${safeName}`, filename: safeName });
   } catch (err) {
     console.error('Upload image error:', err);
-    res.status(500).json({ error: 'Failed to save image on server.' });
+    res.status(500).json({ error: 'Failed to process image: ' + err.message });
   }
 });
 

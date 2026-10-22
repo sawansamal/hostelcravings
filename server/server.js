@@ -7,8 +7,12 @@ const app = express();
 
 // ── Ensure uploads directory exists ──────────
 const uploadsDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (e) {
+  // Ignored on read-only environments like Vercel
 }
 
 // ── Middleware ───────────────────────────────
@@ -31,16 +35,17 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date().t
 
 // ── Fallback: serve index.html ───────────────
 app.get('{*splat}', (req, res) => {
-
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // ── Start ────────────────────────────────────
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`\n🍪  Hostel Cravings server running at port ${PORT}`);
-  console.log(`📊  Admin panel: /admin`);
-  console.log(`🔑  Admin login: admin@hostelcravings.in / kulfimodda69\n`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n🍪  Hostel Cravings server running at port ${PORT}`);
+    console.log(`📊  Admin panel: /admin`);
+    console.log(`🔑  Admin login: admin@hostelcravings.in / kulfimodda69\n`);
+  });
+}
 
 module.exports = app;

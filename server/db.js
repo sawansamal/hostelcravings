@@ -2,16 +2,37 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const dataDir = path.join(__dirname, '..', 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+const isVercel = Boolean(process.env.VERCEL);
+let dbPath;
+
+if (isVercel) {
+  const tmpDir = '/tmp';
+  dbPath = path.join(tmpDir, 'hostelcravings.db');
+  const repoDb = path.join(__dirname, '..', 'data', 'hostelcravings.db');
+  if (!fs.existsSync(dbPath) && fs.existsSync(repoDb)) {
+    try {
+      fs.copyFileSync(repoDb, dbPath);
+    } catch (e) {
+      console.warn('Could not copy seed DB to /tmp:', e);
+    }
+  }
+} else {
+  const dataDir = path.join(__dirname, '..', 'data');
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+  dbPath = path.join(dataDir, 'hostelcravings.db');
 }
 
-const db = new Database(path.join(dataDir, 'hostelcravings.db'));
+const db = new Database(dbPath);
 
-// Enable WAL mode for better performance
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
+// Enable WAL mode for better performance on persistent disks
+if (!isVercel) {
+  try { db.pragma('journal_mode = WAL'); } catch (e) {}
+} else {
+  try { db.pragma('journal_mode = MEMORY'); } catch (e) {}
+}
+try { db.pragma('foreign_keys = ON'); } catch (e) {}
 
 // ── Create tables ────────────────────────────
 db.exec(`
