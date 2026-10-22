@@ -165,7 +165,7 @@
     const grid = document.getElementById("products-grid");
     if (!grid) return;
 
-    fetch(API + "/orders/products")
+    fetch(API + "/orders/products?_t=" + Date.now(), { cache: "no-store" })
       .then(res => {
         if (!res.ok) throw new Error("HTTP error " + res.status);
         return res.json();
@@ -939,7 +939,8 @@
       btnRefreshOrders.classList.add("spinning");
     }
 
-    fetch(API + "/orders/my", {
+    fetch(API + "/orders/my?_t=" + Date.now(), {
+      cache: "no-store",
       headers: { "Authorization": "Bearer " + token }
     })
     .then(res => {

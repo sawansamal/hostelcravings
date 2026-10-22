@@ -1414,7 +1414,10 @@
 
   // Check saved session on load
   if (token) {
-    fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${API}/auth/me?_t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(r => r.json())
       .then(d => {
         if (d.user && d.user.role === 'admin') {
@@ -1512,7 +1515,10 @@
   /* ── 1. STATS ── */
   async function loadStats() {
     try {
-      const res = await fetch(`${API}/admin/stats`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API}/admin/stats?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!res.ok) return;
       const stats = await res.json();
 
@@ -1530,7 +1536,10 @@
   /* ── 2. ORDERS ── */
   async function loadOrders() {
     try {
-      const res = await fetch(`${API}/admin/orders`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API}/admin/orders?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!res.ok) return;
       ordersData = await res.json();
 
@@ -1704,7 +1713,10 @@
   /* ── 3. PRODUCTS & STOCK ── */
   async function loadProducts() {
     try {
-      const res = await fetch(`${API}/admin/products`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API}/admin/products?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!res.ok) {
         if (res.status === 401) {
           showToast('Session expired. Please log in again.', false);
@@ -1721,32 +1733,65 @@
     }
   }
 
-  function checkInventoryBackup(serverProducts) {
-    try {
-      const cachedRaw = localStorage.getItem('hc_inventory_cache');
-      if (cachedRaw) {
-        const cached = JSON.parse(cachedRaw);
-        if (Array.isArray(cached) && cached.length > serverProducts.length) {
-          const banner = document.getElementById('backup-restore-banner');
-          const countEl = document.getElementById('backup-item-count');
-          if (banner && countEl) {
-            countEl.textContent = cached.length;
-            banner.style.display = 'flex';
-          }
-          return;
-        }
-      }
-      if (serverProducts && serverProducts.length > 0) {
-        localStorage.setItem('hc_inventory_cache', JSON.stringify(serverProducts));
-        const banner = document.getElementById('backup-restore-banner');
-        if (banner) banner.style.display = 'none';
-      }
-    } catch(e) {}
+  function saveOwnerInventoryCache(products) {
+    if (!products || !products.length) return;
+    const clean = products.map(({ id, created_at, ...rest }) => rest);
+    localStorage.setItem('hc_inventory_cache', JSON.stringify(clean));
+    localStorage.setItem('hc_inventory_saved_time', Date.now());
   }
 
-  async function restoreFromCachedBackup(itemsToRestore) {
-    if (!itemsToRestore || !itemsToRestore.length) return;
-    showToast(`Restoring ${itemsToRestore.length} snacks to live store...`, true);
+  let isRestoring = false;
+  async function checkInventoryBackup(serverProducts) {
+    if (isRestoring) return;
+    try {
+      const cachedRaw = localStorage.getItem('hc_inventory_cache');
+      if (!cachedRaw) {
+        if (serverProducts && serverProducts.length > 0) {
+          saveOwnerInventoryCache(serverProducts);
+        }
+        return;
+      }
+      const cached = JSON.parse(cachedRaw);
+      if (!Array.isArray(cached) || !cached.length) return;
+
+      // Compare cached items against server items (count, quantities, in_stock)
+      let isDifferent = false;
+      if (cached.length !== serverProducts.length) {
+        isDifferent = true;
+      } else {
+        for (const item of cached) {
+          const found = serverProducts.find(p => p.name.trim().toLowerCase() === item.name.trim().toLowerCase());
+          if (!found || Number(found.quantity) !== Number(item.quantity) || Boolean(found.in_stock) !== Boolean(item.in_stock)) {
+            isDifferent = true;
+            break;
+          }
+        }
+      }
+
+      const banner = document.getElementById('backup-restore-banner');
+      if (isDifferent) {
+        const countEl = document.getElementById('backup-item-count');
+        if (banner && countEl) {
+          countEl.textContent = cached.length;
+          banner.style.display = 'flex';
+        }
+        // Auto-sync back to live store if server reset
+        if (localStorage.getItem('hc_autosync_disabled') !== 'true') {
+          await restoreFromCachedBackup(cached, true);
+        }
+      } else {
+        if (banner) banner.style.display = 'none';
+        saveOwnerInventoryCache(serverProducts);
+      }
+    } catch(e) {
+      console.error('checkInventoryBackup error:', e);
+    }
+  }
+
+  async function restoreFromCachedBackup(itemsToRestore, isSilent) {
+    if (!itemsToRestore || !itemsToRestore.length || isRestoring) return;
+    isRestoring = true;
+    if (!isSilent) showToast(`Restoring ${itemsToRestore.length} snacks to live store...`, true);
     try {
       const res = await fetch(`${API}/admin/products/bulk`, {
         method: 'POST',
@@ -1755,15 +1800,27 @@
       });
       const data = await res.json();
       if (res.ok) {
-        showToast(`Success! Restored all snacks (Total: ${data.total}).`, true);
+        if (!isSilent) showToast(`Success! Synced all snacks to live store (Total: ${data.total}).`, true);
         const banner = document.getElementById('backup-restore-banner');
         if (banner) banner.style.display = 'none';
-        await loadProducts();
-      } else {
+        // Refresh products list
+        const refreshRes = await fetch(`${API}/admin/products?_t=${Date.now()}`, {
+          cache: 'no-store',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (refreshRes.ok) {
+          productsData = await refreshRes.json();
+          document.getElementById('stat-products').textContent = productsData.filter(p => p.in_stock).length;
+          renderProductsTable();
+          saveOwnerInventoryCache(productsData);
+        }
+      } else if (!isSilent) {
         showToast(data.error || 'Failed to restore snacks.', false);
       }
     } catch(err) {
-      showToast('Network error while restoring backup.', false);
+      if (!isSilent) showToast('Network error while restoring backup.', false);
+    } finally {
+      isRestoring = false;
     }
   }
 
@@ -2254,7 +2311,10 @@
   /* ── 5. CUSTOMERS ── */
   async function loadCustomers() {
     try {
-      const res = await fetch(`${API}/admin/customers`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API}/admin/customers?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!res.ok) return;
       const customers = await res.json();
       const tbody = document.getElementById('customers-tbody');
