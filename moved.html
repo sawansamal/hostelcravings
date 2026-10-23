@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Cravings Has Moved!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0d12;
+      --card-bg: rgba(22, 24, 34, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.35);
+      --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glow elements */
+    .glow-orb-1 {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      filter: blur(50px);
+    }
+    .glow-orb-2 {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.1) 0%, transparent 70%);
+      bottom: -80px;
+      right: 10%;
+      pointer-events: none;
+      filter: blur(60px);
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 540px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 44px 36px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 40px -10px var(--amber-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: #fbbf24;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .icon-wrapper {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.05) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.25);
+      animation: floatIcon 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatIcon {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .destination-box {
+      background: rgba(12, 13, 18, 0.6);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .destination-box .label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .destination-box .url {
+      font-family: 'Outfit', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fbbf24;
+      word-break: break-all;
+    }
+
+    .cta-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 28px;
+      background: var(--gold-gradient);
+      color: #0c0d12;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-decoration: none;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -4px rgba(245, 158, 11, 0.45);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -4px rgba(245, 158, 11, 0.65);
+      filter: brightness(1.06);
+    }
+
+    .cta-button:active {
+      transform: translateY(1px);
+    }
+
+    .redirect-timer {
+      margin-top: 22px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .redirect-timer span.count {
+      color: #fbbf24;
+      font-weight: 800;
+      display: inline-block;
+      min-width: 16px;
+    }
+
+    .quick-links {
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 0.88rem;
+    }
+
+    .quick-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .quick-links a:hover {
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb-1"></div>
+  <div class="glow-orb-2"></div>
+
+  <div class="container">
+    <div class="brand-badge">
+      🍪 Hostel Cravings
+    </div>
+
+    <div class="icon-wrapper">
+      🚀
+    </div>
+
+    <h1>We Have <span>Moved!</span></h1>
+    
+    <p class="description">
+      Hostel Cravings has officially upgraded to our brand new, high-speed, permanent website. 
+      Please bookmark our new address!
+    </p>
+
+    <div class="destination-box">
+      <div>
+        <div class="label">New Official Address</div>
+        <div class="url" id="target-display">hostelcravings.vercel.app</div>
+      </div>
+      <div style="font-size: 1.5rem;">✨</div>
+    </div>
+
+    <a href="https://hostelcravings.vercel.app" id="btn-redirect" class="cta-button">
+      <span>Go to New Website</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+
+    <div class="redirect-timer">
+      Redirecting you automatically in <span class="count" id="countdown">4</span> seconds...
+    </div>
+
+    <div class="quick-links">
+      <a href="https://hostelcravings.vercel.app" id="link-store">Snack Storefront</a>
+      <span>•</span>
+      <a href="https://hostelcravings.vercel.app/admin" id="link-admin">Owner Hub</a>
+    </div>
+  </div>
+
+  <script>
+    // Preserve subpath (e.g. /admin redirect)
+    const currentPath = window.location.pathname;
+    let targetBase = 'https://hostelcravings.vercel.app';
+    
+    let targetUrl = targetBase;
+    if (currentPath.startsWith('/admin')) {
+      targetUrl = targetBase + '/admin';
+    }
+
+    const btnRedirect = document.getElementById('btn-redirect');
+    const targetDisplay = document.getElementById('target-display');
+    const countdownEl = document.getElementById('countdown');
+
+    if (btnRedirect) btnRedirect.href = targetUrl;
+    if (targetDisplay) {
+      targetDisplay.textContent = targetUrl.replace('https://', '');
+    }
+
+    let timeLeft = 4;
+    const interval = setInterval(() => {
+      timeLeft--;
+      if (countdownEl) countdownEl.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        window.location.replace(targetUrl);
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
