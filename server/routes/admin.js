@@ -298,12 +298,21 @@ router.patch('/products/:id/quantity', adminOnly, async (req, res) => {
 // Delete product
 router.delete('/products/:id', adminOnly, async (req, res) => {
   try {
-    await db.run('DELETE FROM products WHERE id=?', [req.params.id]);
-    res.json({ success: true });
+    const id = req.params.id;
+    // Detach from order_items so historical records don't block deletion
+    try {
+      await db.run('UPDATE order_items SET product_id = NULL WHERE product_id = ?', [id]);
+    } catch (fkErr) {
+      // Ignore if table or foreign key is not restricting
+    }
+
+    const result = await db.run('DELETE FROM products WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Product deleted permanently.' });
   } catch (err) {
     console.error('Error deleting product:', err);
     res.status(500).json({ error: 'Could not delete product: ' + err.message });
   }
 });
+
 
 module.exports = router;

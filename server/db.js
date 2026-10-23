@@ -219,15 +219,17 @@ async function initDatabase() {
         await rawRun("UPDATE users SET password = ?, email = ? WHERE role='admin'", [hash, adminEmail]);
       }
 
-      for (const p of defaultProducts) {
-        const existing = await rawGet('SELECT id FROM products WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))', [p[0]]);
-        if (!existing) {
+      const prodCount = await rawGet('SELECT COUNT(*) as count FROM products');
+      if (!prodCount || Number(prodCount.count) === 0) {
+        for (const p of defaultProducts) {
           await rawRun(`
             INSERT INTO products (name, category, price, quantity, in_stock, description, image_url)
             VALUES (?, ?, ?, ?, ?, ?, ?)
           `, p);
         }
+        console.log('✅ Initial snacks seeded into fresh database');
       }
+
 
       if (!isTurso && localDb) {
         try { localDb.pragma('wal_checkpoint(TRUNCATE)'); } catch (e) {}

@@ -1754,32 +1754,20 @@
       const cached = JSON.parse(cachedRaw);
       if (!Array.isArray(cached) || !cached.length) return;
 
-      // Compare cached items against server items (count, quantities, in_stock)
-      let isDifferent = false;
-      if (cached.length !== serverProducts.length) {
-        isDifferent = true;
-      } else {
-        for (const item of cached) {
-          const found = serverProducts.find(p => p.name.trim().toLowerCase() === item.name.trim().toLowerCase());
-          if (!found || Number(found.quantity) !== Number(item.quantity) || Boolean(found.in_stock) !== Boolean(item.in_stock)) {
-            isDifferent = true;
-            break;
-          }
-        }
-      }
-
-      const banner = document.getElementById('backup-restore-banner');
-      if (isDifferent) {
+      // Only auto-restore if the server is completely empty (e.g. fresh database setup)
+      if (serverProducts.length === 0 && cached.length > 0) {
+        const banner = document.getElementById('backup-restore-banner');
         const countEl = document.getElementById('backup-item-count');
         if (banner && countEl) {
           countEl.textContent = cached.length;
           banner.style.display = 'flex';
         }
-        // Auto-sync back to live store if server reset
         if (localStorage.getItem('hc_autosync_disabled') !== 'true') {
           await restoreFromCachedBackup(cached, true);
         }
       } else {
+        // Live server has products: sync local cache to live server so deleted items stay deleted
+        const banner = document.getElementById('backup-restore-banner');
         if (banner) banner.style.display = 'none';
         saveOwnerInventoryCache(serverProducts);
       }
@@ -2004,12 +1992,25 @@
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      const data = await res.json().catch(() => ({}));
       if (res.ok) {
-        showToast('Product removed.', true);
+        showToast('Snack removed successfully.', true);
+        // Immediately remove from in-memory state and localStorage cache
+        productsData = productsData.filter(p => Number(p.id) !== Number(id));
+        saveOwnerInventoryCache(productsData);
+        const statCount = document.getElementById('stat-products');
+        if (statCount) statCount.textContent = productsData.filter(p => p.in_stock).length;
+        renderProductsTable();
+        // Background refresh to confirm server state
         await loadProducts();
+      } else {
+        showToast(data.error || 'Failed to remove snack.', false);
       }
-    } catch(e) {}
+    } catch(e) {
+      showToast('Network error while removing snack.', false);
+    }
   };
+
 
   /* ── 4. ADD / EDIT PRODUCT MODAL ── */
   const prodModal = document.getElementById('product-modal');
