@@ -1432,6 +1432,32 @@
     loginScreen.style.display = 'flex';
   }
 
+  /* ── Indian Standard Time (IST) Date Formatter ── */
+  function formatIST(dateStr, options = { hour: '2-digit', minute: '2-digit', hour12: true }) {
+    if (!dateStr) return '—';
+    let str = String(dateStr).trim();
+    if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(str)) {
+      str = str.replace(' ', 'T') + 'Z';
+    }
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      ...options
+    });
+  }
+
+  function getISTDateString(dateStr) {
+    if (!dateStr) return '';
+    let str = String(dateStr).trim();
+    if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(str)) {
+      str = str.replace(' ', 'T') + 'Z';
+    }
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+  }
+
   /* ── Navigation ── */
   const navBtns = document.querySelectorAll('.nav-btn[data-page]');
   const pageViews = document.querySelectorAll('.page-view');
@@ -1587,7 +1613,12 @@
     tbody.innerHTML = list.map(o => {
       const custName = o.user_name || o.guest_name || 'Hostel Student';
       const custPhone = o.user_phone || o.guest_phone || '';
-      const timeStr = o.created_at ? new Date(o.created_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—';
+      const orderDateIST = getISTDateString(o.created_at);
+      const todayDateIST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+      const isToday = !orderDateIST || orderDateIST === todayDateIST;
+      const timeStr = isToday
+        ? formatIST(o.created_at, { hour: '2-digit', minute: '2-digit', hour12: true })
+        : formatIST(o.created_at, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
       const cleanPhone = custPhone.replace(/[^\d]/g, '');
 
       // Action button based on current status
@@ -2335,7 +2366,7 @@
           <td>${c.hostel_no || '—'} / Room ${c.room_no || '—'}</td>
           <td><span style="font-weight:700;color:var(--gold-light)">${c.order_count} orders</span></td>
           <td><b>₹${Number(c.total_spent || 0).toFixed(0)}</b></td>
-          <td style="font-size:.78rem;color:var(--text-muted)">${c.created_at ? new Date(c.created_at).toLocaleDateString('en-IN') : '—'}</td>
+          <td style="font-size:.78rem;color:var(--text-muted)">${formatIST(c.created_at, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
         </tr>
       `).join("");
     } catch(e) {}

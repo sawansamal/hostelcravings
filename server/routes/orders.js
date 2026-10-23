@@ -49,11 +49,13 @@ router.post('/', requireAuth, async (req, res) => {
     const finalName = (guest_name || (user && user.name) || 'Hostel Student').trim();
     const finalPhone = (guest_phone || (user && user.phone) || '').trim();
 
+    const nowIso = new Date().toISOString();
     const orderResult = await db.run(`
-      INSERT INTO orders (user_id, guest_name, guest_phone, hostel_no, room_no, total, delivery_type, payment_method, notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO orders (user_id, guest_name, guest_phone, hostel_no, room_no, total, delivery_type, payment_method, notes, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [userId, finalName, finalPhone, hostel_no, room_no, total,
-        delivery_type || 'door', payment_method || 'cash', notes || null]);
+        delivery_type || 'door', payment_method || 'cash', notes || null, nowIso, nowIso]);
+
 
     const orderId = orderResult.lastInsertRowid;
 

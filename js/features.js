@@ -1004,11 +1004,26 @@
       cancelled: { label: "Cancelled", badgeClass: "os-cancelled", step: 0, text: "This order was cancelled" }
     };
 
+    function formatIST(dateStr, options = {}) {
+      if (!dateStr) return '—';
+      let str = String(dateStr).trim();
+      if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(str)) {
+        str = str.replace(' ', 'T') + 'Z';
+      }
+      const d = new Date(str);
+      if (isNaN(d.getTime())) return String(dateStr);
+      return d.toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        ...options
+      });
+    }
+
     ordersContent.innerHTML = orders.map(ord => {
       const cfg = statusConfig[ord.status] || statusConfig.pending;
-      const dateStr = ord.created_at ? new Date(ord.created_at).toLocaleString('en-IN', {
+      const dateStr = ord.created_at ? formatIST(ord.created_at, {
         month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true
       }) : 'Recent';
+
 
       const progressWidth = cfg.step === 1 ? '16%' : cfg.step === 2 ? '50%' : cfg.step === 3 ? '82%' : cfg.step === 4 ? '100%' : '0%';
 

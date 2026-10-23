@@ -25,17 +25,27 @@ router.get('/stats', adminOnly, async (req, res) => {
   try {
     const totalRow      = await db.get("SELECT COUNT(*) as c FROM orders");
     const pendingRow    = await db.get("SELECT COUNT(*) as c FROM orders WHERE status='pending'");
-    const deliveredRow  = await db.get("SELECT COUNT(*) as c FROM orders WHERE status='delivered' AND date(created_at)=date('now','localtime')");
     const revRow        = await db.get("SELECT COALESCE(SUM(total),0) as r FROM orders WHERE status != 'cancelled'");
     const custRow       = await db.get("SELECT COUNT(*) as c FROM users WHERE role='customer'");
+
+    const deliveredOrders = await db.all("SELECT created_at FROM orders WHERE status='delivered'");
+    const nowIST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    const deliveredTodayCount = deliveredOrders.filter(o => {
+      if (!o.created_at) return false;
+      let s = String(o.created_at).trim();
+      if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(s)) s = s.replace(' ', 'T') + 'Z';
+      const orderDateIST = new Date(s).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+      return orderDateIST === nowIST;
+    }).length;
 
     res.json({
       totalOrders: totalRow ? totalRow.c : 0,
       pendingOrders: pendingRow ? pendingRow.c : 0,
-      deliveredToday: deliveredRow ? deliveredRow.c : 0,
+      deliveredToday: deliveredTodayCount,
       revenue: revRow ? revRow.r : 0,
       customers: custRow ? custRow.c : 0
     });
+
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch stats: ' + err.message });
   }
