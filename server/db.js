@@ -211,7 +211,7 @@ async function initDatabase() {
         const hash = bcrypt.hashSync(adminPassword, 10);
         await rawRun(`
           INSERT INTO users (name, email, phone, password, role)
-          VALUES ('Admin', ?, '7095143825', ?, 'admin')
+          VALUES ('Admin', ?, '9499444476', ?, 'admin')
         `, [adminEmail, hash]);
         console.log('✅ Admin account seeded');
       } else if (process.env.ADMIN_PASSWORD) {

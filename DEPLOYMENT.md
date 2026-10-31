@@ -48,5 +48,5 @@ Your application is configured with:
 ### Live URLs:
 - **Storefront:** `https://hostelcravings.vercel.app/`
 - **Owner Hub:** `https://hostelcravings.vercel.app/admin`
-- **WhatsApp Direct Order API:** Connected to `+91 7095143825`
+- **WhatsApp Direct Order API:** Connected to `+91 9499444476`
 

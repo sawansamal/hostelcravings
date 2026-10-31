@@ -12,7 +12,7 @@
     ? "http://localhost:3000/api"
     : "/api";
 
-  const WA_NUMBER = "917095143825";
+  const WA_NUMBER = "919499444476";
 
   /* ── 1. CART STORAGE & HELPERS ─────────────── */
   function getCart() {
